@@ -4,6 +4,7 @@
 
 const webpack = require('webpack');
 const helpers = require('./helpers');
+const path = require('path');
 
 /*
  * Webpack Plugins
@@ -20,6 +21,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const LoaderOptionsPlugin = require('webpack/lib/LoaderOptionsPlugin');
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 const ngcWebpack = require('ngc-webpack');
+const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
 
 /*
  * Webpack Constants
@@ -37,7 +39,7 @@ const METADATA = {
  *
  * See: http://webpack.github.io/docs/configuration.html#cli
  */
-module.exports = function (options) {
+module.exports = function(options) {
   isProd = options.env === 'production';
   return {
 
@@ -59,9 +61,7 @@ module.exports = function (options) {
     entry: {
 
       'polyfills': './src/polyfills.browser.ts',
-      'main':      AOT ? './src/main.browser.aot.ts' :
-                  './src/main.browser.ts'
-
+      'main': AOT ? './src/main.browser.aot.ts' : './src/main.browser.ts',
     },
 
     /*
@@ -107,8 +107,7 @@ module.exports = function (options) {
          */
         {
           test: /\.ts$/,
-          use: [
-            {
+          use: [{
               loader: '@angularclass/hmr-loader',
               options: {
                 pretty: !isProd,
@@ -179,7 +178,7 @@ module.exports = function (options) {
           exclude: [helpers.root('src/index.html')]
         },
 
-        /* 
+        /*
          * File loader for supporting images, for example, in CSS files.
          */
         {
@@ -188,8 +187,8 @@ module.exports = function (options) {
         },
 
         /* File loader for supporting fonts, for example, in CSS files.
-        */
-        { 
+         */
+        {
           test: /\.(eot|woff2?|svg|ttf)([\?]?.*)$/,
           use: 'file-loader'
         }
@@ -208,6 +207,11 @@ module.exports = function (options) {
         path: helpers.root('dist'),
         filename: 'webpack-assets.json',
         prettyPrint: true
+      }),
+
+       new ServiceWorkerWebpackPlugin({
+        entry: path.join(__dirname, '../src/sw.js'),
+        publicPath: '/'
       }),
 
       /*
@@ -264,9 +268,13 @@ module.exports = function (options) {
        *
        * See: https://www.npmjs.com/package/copy-webpack-plugin
        */
-      new CopyWebpackPlugin([
-        { from: 'src/assets', to: 'assets' },
-        { from: 'src/meta'}
+      new CopyWebpackPlugin([{
+          from: 'src/assets',
+          to: 'assets'
+        },
+        {
+          from: 'src/meta'
+        }
       ]),
 
 

@@ -3,10 +3,10 @@
  */
 import {
   Component,
-  OnInit,
   ViewEncapsulation
 } from '@angular/core';
 import { AppState } from './app.service';
+import runtime from 'serviceworker-webpack-plugin/lib/runtime';
 
 /*
  * App Component
@@ -21,25 +21,20 @@ import { AppState } from './app.service';
   template: `
 
     <main>
-      <p>Simple TEST</p>
-
+      <p>Hello World</p>
       <router-outlet></router-outlet>
     </main>
   `
 })
-export class AppComponent implements OnInit {
-  public angularclassLogo = 'assets/img/angularclass-avatar.png';
-  public name = 'Angular 2 Webpack Starter';
-  public url = 'https://twitter.com/AngularClass';
+export class AppComponent {
 
-  constructor(
-    public appState: AppState
-  ) {}
+  private runtime = require('serviceworker-webpack-plugin/lib/runtime');
 
-  public ngOnInit() {
-    console.log('Initial App State', this.appState.state);
+  constructor(public appState: AppState) {
+    if ('serviceWorker' in navigator) {
+      runtime.register();
+    }
   }
-
 }
 
 /*
