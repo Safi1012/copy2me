@@ -59,7 +59,7 @@ export class SignInService {
         });
 
       } else {
-        this.databaseService.wipeUserData();
+        // this.databaseService.wipeUserData();
         this.router.navigate(['/welcome']);
 
       }
@@ -77,7 +77,7 @@ export class SignInService {
       }).catch(err => {
         console.log(err);
         resolve(false);
-      })
+      });
     });
   }
 

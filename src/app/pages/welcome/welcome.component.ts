@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import localForage = require('localforage');
+// import localForage = require('localforage');
 
 @Component({
   selector: 'c2m-welcome',

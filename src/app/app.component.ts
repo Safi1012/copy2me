@@ -11,7 +11,7 @@ import runtime from 'serviceworker-webpack-plugin/lib/runtime';
  * Top Level Component
  */
 @Component({
-  selector: 'app',
+  selector: 'c2m-app',
   encapsulation: ViewEncapsulation.None,
   styleUrls: [
     './app.component.scss'
