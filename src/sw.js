@@ -1,4 +1,4 @@
-toolbox = require('sw-toolbox/sw-toolbox.js');
+toolbox = require('sw-toolbox');
 localForage = require('localforage');
 
 // const lfMessages = localForage.createInstance({
