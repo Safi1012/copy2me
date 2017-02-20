@@ -34,7 +34,7 @@ const METADATA = webpackMerge(commonConfig({
   HMR: false
 });
 
-module.exports = function (env) {
+module.exports = function(env) {
   return webpackMerge(commonConfig({
     env: ENV
   }), {
@@ -115,6 +115,17 @@ module.exports = function (env) {
           include: [helpers.root('src', 'styles')]
         },
 
+        /*
+         * Transpile ES6 to ES2015 - uglify only works with ES2015 (is needed since the sw.js file uses ES6)
+         */
+        {
+          test: /\.js$/,
+          exclude: /node_modules/,
+          loader: 'babel-loader',
+          query: {
+            presets: ['es2015']
+          }
+        }
       ]
 
     },
