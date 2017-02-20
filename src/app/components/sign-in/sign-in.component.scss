@@ -38,7 +38,7 @@ button {
   font-size: 1.2em;
 }
 
-button:hover {
+button:hover, button:focus {
   background-color: $primary-color-light;
   transition: all .7s ease-in;
   color: $inverted-text-color;
