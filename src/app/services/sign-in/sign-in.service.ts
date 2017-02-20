@@ -15,93 +15,93 @@ export enum SignInProvider {
 export class SignInService {
 
   constructor(
-    // private databaseService: DatabaseService,
+    private databaseService: DatabaseService,
     private router: Router,
   ) { }
 
-  // signInWithService(service: SignInProvider) {
-  //   let provider;
+  public signAnonymously() {
+    firebase.auth().signInAnonymously().catch(err => {
+      console.log('signInAnonymously: ' + err);
+    });
+  }
 
-  //   switch (service) {
-  //     case SignInProvider.Google:
-  //       provider = new firebase.auth.GoogleAuthProvider();
-  //       break;
+  public signInWithService(service: SignInProvider) {
+    let provider;
 
-  //     case SignInProvider.Github:
-  //       provider = new firebase.auth.GithubAuthProvider();
-  //       break;
+    switch (service) {
+      case SignInProvider.Google:
+        provider = new firebase.auth.GoogleAuthProvider();
+        break;
 
-  //     case SignInProvider.Twitter:
-  //       provider = new firebase.auth.TwitterAuthProvider();
-  //       break;
+      case SignInProvider.Github:
+        provider = new firebase.auth.GithubAuthProvider();
+        break;
 
-  //     default:
-  //       console.log('selected service does not exist');
-  //   }
+      case SignInProvider.Twitter:
+        provider = new firebase.auth.TwitterAuthProvider();
+        break;
 
-  //   this.signInWithProvider(provider).catch(err => {
-  //     console.log('signInWithProvider: ' + err);
-  //   });
-  // }
+      default:
+        console.log('selected service does not exist');
+    }
 
-  // signAnonymously() {
-  //   firebase.auth().signInAnonymously().catch(err => {
-  //     console.log('signInAnonymously: ' + err);
-  //   });
-  // }
+    this.signInWithProvider(provider).catch(err => {
+      console.log('signInWithProvider: ' + err);
+    });
+  }
 
-  // observeSignInState() {
-  //   firebase.auth().onAuthStateChanged((user: firebase.User) => {
-  //     if (user) {
-  //       user.getToken().then(token => {
-  //         this.databaseService.addUser(user.uid, token);
-  //         this.router.navigate(['/home']);
-  //       });
+  public observeSignInState() {
+    firebase.auth().onAuthStateChanged((user: firebase.User) => {
+      if (user) {
+        user.getToken().then(token => {
+          this.databaseService.addUser(user.uid, token);
+          this.router.navigate(['/home']);
+        });
 
-  //     } else {
-  //       this.databaseService.wipeUserData();
-  //       this.router.navigate(['/welcome']);
+      } else {
+        this.databaseService.wipeUserData();
+        this.router.navigate(['/welcome']);
 
-  //     }
-  //   });
-  // }
+      }
+    });
+  }
 
-  // isUserSignedIn(): Promise<boolean> {
-  //   return new Promise(resolve => {
-  //     this.databaseService.getUser().then(user => {
-  //       if (user) {
-  //         resolve(true);
-  //       } else {
-  //         resolve(false);
-  //       }
-  //     }).catch(err => {
-  //       console.log(err);
-  //       resolve(false);
-  //     })
-  //   });
-  // }
+  public isUserSignedIn(): Promise<boolean> {
+    return new Promise(resolve => {
+      this.databaseService.getUser().then(user => {
+        if (user) {
+          resolve(true);
+        } else {
+          resolve(false);
+        }
+      }).catch(err => {
+        console.log(err);
+        resolve(false);
+      })
+    });
+  }
 
-  // signOut() {
-  //   firebase.auth().signOut().then(() => {
-  //     console.log('sign-out successfully');
+  public signOut() {
+    firebase.auth().signOut().then(() => {
+      console.log('sign-out successfully');
 
-  //   }, function (err) {
-  //     console.log('sign-out error: ' + err);
+    }, err => {
+      console.log('sign-out error: ' + err);
 
-  //   });
-  // }
+    });
+  }
 
-  // private signInWithProvider(provider: any): Promise<boolean> {
-  //   firebase.auth().signInWithRedirect(provider);
-  //   return new Promise((resolve, reject) => {
+  private signInWithProvider(provider: any): Promise<boolean> {
+    firebase.auth().signInWithRedirect(provider);
+    return new Promise((resolve, reject) => {
 
-  //     firebase.auth().getRedirectResult().then(result => {
-  //       resolve();
+      firebase.auth().getRedirectResult().then(result => {
+        resolve();
 
-  //     }).catch((error: any) => {
-  //       reject();
+      }).catch((error: any) => {
+        reject();
 
-  //     });
-  //   });
-  // }
+      });
+    });
+  }
 }

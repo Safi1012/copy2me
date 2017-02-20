@@ -30,6 +30,7 @@ import { SignInComponent } from './components/sign-in/sign-in.component';
 
 // Services
 import { SignInService } from './services/sign-in/sign-in.service';
+import { DatabaseService } from './services/database/database.service';
 
 // Global Styles
 import '../styles/_materialize.scss';
@@ -65,7 +66,8 @@ type StoreType = {
   providers: [ // expose our Services and Providers into Angular's dependency injection
     ENV_PROVIDERS,
     APP_PROVIDERS,
-    SignInService
+    SignInService,
+    DatabaseService
   ]
 })
 export class AppModule {
