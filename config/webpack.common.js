@@ -166,7 +166,7 @@ module.exports = function(options) {
           use: ['to-string-loader', 'css-loader', {
             loader: "sass-loader",
             options: {
-              includePaths: [helpers.root('node_modules')]
+              includePaths: [helpers.root('/')]
             }
           }],
           exclude: [helpers.root('src', 'styles')]

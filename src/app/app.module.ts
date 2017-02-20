@@ -23,6 +23,7 @@ import { MaterializeModule } from 'angular2-materialize';
 
 // Components
 import { WelcomeComponent } from './welcome/welcome.component';
+import { NavBarComponent } from './nav-bar/nav-bar.component';
 
 // Global Styles
 import '../styles/_materialize.scss';
@@ -44,7 +45,8 @@ type StoreType = {
   bootstrap: [AppComponent],
   declarations: [
     AppComponent,
-    WelcomeComponent
+    WelcomeComponent,
+    NavBarComponent
   ],
   imports: [
     BrowserModule,
