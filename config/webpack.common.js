@@ -163,12 +163,7 @@ module.exports = function(options) {
          */
         {
           test: /\.scss$/,
-          use: ['to-string-loader', 'css-loader', {
-            loader: "sass-loader",
-            options: {
-              includePaths: [helpers.root('/')]
-            }
-          }],
+          use: ['to-string-loader', 'css-loader', 'sass-loader'],
           exclude: [helpers.root('src', 'styles')]
         },
 
@@ -289,6 +284,9 @@ module.exports = function(options) {
         },
         {
           from: 'src/meta'
+        },
+        {
+          from: 'src/manifest.json'
         }
       ]),
 
@@ -378,7 +376,7 @@ module.exports = function(options) {
       new ngcWebpack.NgcWebpackPlugin({
         disabled: !AOT,
         tsConfig: helpers.root('tsconfig.webpack.json'),
-        resourceOverride: helpers.root('config/resource-override.js')
+        // resourceOverride: helpers.root('config/resource-override.js')
       })
 
     ],
