@@ -15,15 +15,21 @@ import { AppComponent } from './app.component';
 import { APP_RESOLVER_PROVIDERS } from './app.resolver';
 import { AppState, InternalStateType } from './app.service';
 
-// materialize
+// Materialize
 import 'materialize-css';
 
 // Modules
 import { MaterializeModule } from 'angular2-materialize';
 
+// Pages
+import { WelcomeComponent } from './pages/welcome/welcome.component';
+
 // Components
-import { WelcomeComponent } from './welcome/welcome.component';
-import { NavBarComponent } from './nav-bar/nav-bar.component';
+import { NavBarComponent } from './components/nav-bar/nav-bar.component';
+import { SignInComponent } from './components/sign-in/sign-in.component';
+
+// Services
+import { SignInService } from './services/sign-in/sign-in.service';
 
 // Global Styles
 import '../styles/_materialize.scss';
@@ -46,7 +52,8 @@ type StoreType = {
   declarations: [
     AppComponent,
     WelcomeComponent,
-    NavBarComponent
+    NavBarComponent,
+    SignInComponent
   ],
   imports: [
     BrowserModule,
@@ -57,7 +64,8 @@ type StoreType = {
   ],
   providers: [ // expose our Services and Providers into Angular's dependency injection
     ENV_PROVIDERS,
-    APP_PROVIDERS
+    APP_PROVIDERS,
+    SignInService
   ]
 })
 export class AppModule {

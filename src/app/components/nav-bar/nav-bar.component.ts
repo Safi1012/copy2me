@@ -15,7 +15,7 @@ export class NavBarComponent {
     (window.navigator as any).standalone ? true : false);
 
   constructor(
-    private router: Router,
+    public router: Router,
     // private signInService: SignInService,
     // private historyService: HistoryService,
   ) { }

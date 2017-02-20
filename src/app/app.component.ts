@@ -14,7 +14,7 @@ import runtime from 'serviceworker-webpack-plugin/lib/runtime';
   selector: 'app',
   encapsulation: ViewEncapsulation.None,
   styleUrls: [
-    './app.component.css'
+    './app.component.scss'
   ],
   template: `
     <main>

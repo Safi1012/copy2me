@@ -1,0 +1,75 @@
+@import 'src/styles/_colors.scss';
+
+/*
+* host
+*/
+
+:host {
+  display: block;
+  padding-top: 64px; // fixed navbar has a 64px height
+  height: calc(100vh - 64px);
+}
+
+
+/*
+* text
+*/
+
+h1 {
+  font-size: 2em;
+  text-align: center;
+  color: $primary-text-color-dark;
+}
+
+p {
+  padding-top: 5px;
+}
+
+
+/*
+* button
+*/
+
+button {
+  width: 100%;
+  color: $primary-color-light;
+  background-color: $inverted-text-color;
+  height: 90px;
+  font-size: 1.2em;
+}
+
+button:hover {
+  background-color: $primary-color-light;
+  transition: all .7s ease-in;
+  color: $inverted-text-color;
+  .icon {
+    fill: $inverted-text-color;
+    transition: all .7s ease-in;
+  }
+}
+
+.icon {
+  display: inline-block;
+  width: 45px;
+  height: 45px;
+  fill: $primary-color-light;
+}
+
+svg {
+  margin-right: 25px;
+  margin-top: 2px;
+}
+
+.btn-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+
+/*
+* list
+*/
+
+li {
+  margin: 20px 0px;
+}

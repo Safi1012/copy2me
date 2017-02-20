@@ -1,0 +1,58 @@
+<div class="row">
+  <ul class="col s12">
+    <div class="col m3 l4"></div>
+    <div class="col s12 m6 l4">
+      <li>
+        <h1>
+          Welcome to Copy2me
+        </h1>
+      </li>
+
+      <li>
+        <button class="waves-effect waves-light btn-large" name="google" type="button" (click)="signIn(SignInProvider.Google)">
+
+          <div class="btn-wrapper">
+            <svg class="icon">
+              <use xlink:href="assets/icons/icons.svg#icon-google"></use>
+            </svg>
+            <p>Google</p>
+          </div>
+        </button>
+      </li>
+
+      <li>
+        <button class="waves-effect waves-light btn-large" name="github" type="button" (click)="signIn(SignInProvider.Github)">
+          <div class="btn-wrapper">
+            <svg class="icon">
+              <use xlink:href="assets/icons/icons.svg#icon-github-1"></use>
+            </svg>
+            <p>Github</p>
+          </div>
+        </button>
+      </li>
+
+      <li>
+        <button class="waves-effect waves-light btn-large" name="twitter" type="button" (click)="signIn(SignInProvider.Twitter)">
+          <div class="btn-wrapper">
+            <svg class="icon">
+              <use xlink:href="assets/icons/icons.svg#icon-twitter"></use>
+            </svg>
+            <p>Twitter</p>
+          </div>
+        </button>
+      </li>
+
+      <li>
+        <button class="waves-effect waves-light btn-large" name="demo" type="button" (click)="signIn(SignInProvider.Demo)">
+          <div class="btn-wrapper">
+            <svg class="icon">
+              <use xlink:href="assets/icons/icons.svg#icon-explorer"></use>
+            </svg>
+            <p>Demo</p>
+          </div>
+        </button>
+      </li>
+
+    </div>
+  </ul>
+</div>
