@@ -1,0 +1,36 @@
+@import 'node_modules/materialize-css/sass/components/color';
+@import 'node_modules/materialize-css/sass/components/variables';
+
+/*
+* app theme
+*/
+
+$primary-color-dark: color("indigo", "darken-4");
+$primary-color-light: color("indigo", "darken-2");
+$accent-color: color('orange', 'accent-3');
+
+/*
+* text
+*/
+
+$primary-text-color-dark: color("grey", "darken-3");
+$primary-text-color-light: color("grey", "lighten-1");
+$inverted-text-color: #FFF;
+
+/*
+* input
+*/
+
+$input-text-color: #FFF;
+$input-text-color-placeholder: $primary-text-color-light;
+$input-border-color: #FFF;
+$input-border-color-focus: $accent-color;
+$input-label-color: #FFF;
+$input-label-color-focus: #FFF;
+
+/*
+* button
+*/
+
+$primary-button-background-color: color("indigo", "darken-1");
+$secondary-button-background-color: #FFF;

@@ -1,0 +1,30 @@
+<!-- Dropdown Structure -->
+<ul id="dropdown1" class="dropdown-content" *ngIf="this.router.url != '/welcome'">
+  <li><a (click)="clearHistory()">Clear History</a></li>
+  <!--<li><a href="">Edit</a></li>-->
+  <li class="divider"></li>
+  <li><a (click)="signOut()">Logout</a></li>
+</ul>
+
+<nav [class.isIOS]="isIOS" class="navigation">
+  <div class="nav-wrapper">
+    <a routerLink="/home" routerLinkActive="active" class="brand-logo left navigation_left">Copy2me</a>
+
+    <ul class="right hide-on-large-only dd" *ngIf="this.router.url != '/welcome'">
+      <!-- Dropdown Trigger -->
+      <li>
+        <a materialize="dropdown" class="dropdown-button" data-activates="dropdown1">
+          <svg class="icon">
+            <use xlink:href="assets/icon/icons.svg#icon-more-options"></use>
+          </svg>
+        </a>
+      </li>
+    </ul>
+
+    <ul class="hide-on-med-and-down right navigation_right" *ngIf="this.router.url != '/welcome'">
+      <li><a (click)="clearHistory()">Clear History</a></li>
+      <!--<li><a>Edit</a></li>-->
+      <li><a (click)="signOut()">Logout</a></li>
+    </ul>
+  </div>
+</nav>

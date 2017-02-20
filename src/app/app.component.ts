@@ -1,11 +1,9 @@
 /*
  * Angular 2 decorators and services
  */
-import {
-  Component,
-  ViewEncapsulation
-} from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { AppState } from './app.service';
+import { WelcomeComponent } from './welcome/welcome.component';
 import runtime from 'serviceworker-webpack-plugin/lib/runtime';
 
 /*
@@ -19,9 +17,8 @@ import runtime from 'serviceworker-webpack-plugin/lib/runtime';
     './app.component.css'
   ],
   template: `
-
     <main>
-      <p>Hello World</p>
+      <c2m-welcome></c2m-welcome>
       <router-outlet></router-outlet>
     </main>
   `

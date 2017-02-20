@@ -1,0 +1,108 @@
+@import '../shared/colors.scss';
+
+/*
+* host
+*/
+
+:host {
+  z-index: 10;
+  position: fixed;
+  width: 100vw;
+}
+
+
+/*
+* nav
+*/
+
+nav {
+  background-color: $primary-color-dark;
+}
+
+nav ul a:hover {
+  background-color: $primary-color-light;
+}
+
+@media #{$large-and-up} {
+  .navigation_left {
+    margin-left: 80px;
+  }
+  .navigation_right {
+    margin-right: 80px;
+  }
+}
+
+
+/*
+* dropdown
+*/
+
+.dropdown-content {
+  min-width: 150px;
+}
+
+.dropdown-content li a {
+  padding: 25px 10px;
+}
+
+ul#dropdown1 {
+  left: 724px;
+}
+
+
+/*
+* svg
+*/
+
+svg {
+  width: 32px;
+  height: 32px;
+  fill: $inverted-text-color;
+}
+
+a.dropdown-button {
+  height: 56px;
+  padding-top: 11px;
+}
+
+@media #{$medium-and-up} {
+  svg {
+    width: 37px;
+    height: 37px;
+  }
+  a.dropdown-button {
+    height: 64px;
+    padding-top: 14px;
+  }
+}
+
+
+/*
+* list
+*/
+
+li a {
+  color: $primary-color-light;
+}
+
+li a:hover {
+  color: $inverted-text-color;
+  background-color: $primary-color-light;
+  transition: all .3s ease-in;
+}
+
+@media #{$large-and-up} {
+  li a {
+    color: $inverted-text-color;
+  }
+}
+
+
+/*
+* iOS Devices - make navbar bigger to fill gap (statusbar)
+*/
+
+.isIOS {
+  height: 80px;
+  padding-top: 20px;
+}

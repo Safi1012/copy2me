@@ -29,7 +29,7 @@ const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
 const HMR = helpers.hasProcessFlag('hot');
 const AOT = helpers.hasNpmFlag('aot');
 const METADATA = {
-  title: 'Angular2 Webpack Starter by @gdi2290 from @AngularClass',
+  title: 'Copy2me',
   baseUrl: '/',
   isDevServer: helpers.isWebpackDevServer()
 };
@@ -163,7 +163,12 @@ module.exports = function(options) {
          */
         {
           test: /\.scss$/,
-          use: ['to-string-loader', 'css-loader', 'sass-loader'],
+          use: ['to-string-loader', 'css-loader', {
+            loader: "sass-loader",
+            options: {
+              includePaths: [helpers.root('node_modules')]
+            }
+          }],
           exclude: [helpers.root('src', 'styles')]
         },
 
@@ -209,9 +214,19 @@ module.exports = function(options) {
         prettyPrint: true
       }),
 
-       new ServiceWorkerWebpackPlugin({
+      new ServiceWorkerWebpackPlugin({
         entry: path.join(__dirname, '../src/sw.js'),
         publicPath: '/'
+      }),
+
+      /*
+       * Plugin: angular2-materialize
+       */
+      new webpack.ProvidePlugin({
+        $: 'jquery',
+        jQuery: 'jquery',
+        'window.jQuery': 'jquery',
+        Hammer: 'hammerjs/hammer'
       }),
 
       /*
