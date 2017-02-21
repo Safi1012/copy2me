@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { SignInService } from '../sign-in/sign-in.service';
-import { HistoryService } from '../history/history.service';
+import { SignInService } from '../../services/sign-in/sign-in.service';
+import { HistoryService } from '../../services/history/history.service';
 
 @Component({
   selector: 'c2m-nav-bar',
@@ -16,15 +16,15 @@ export class NavBarComponent {
 
   constructor(
     public router: Router,
-    // private signInService: SignInService,
+    private signInService: SignInService,
     // private historyService: HistoryService,
   ) { }
 
-  // signOut() {
-  //   this.signInService.signOut();
-  // }
+  public signOut() {
+    this.signInService.signOut();
+  }
 
-  // clearHistory() {
-  //   this.historyService.clearHistory();
-  // }
+  public clearHistory() {
+    // this.historyService.clearHistory();
+  }
 }

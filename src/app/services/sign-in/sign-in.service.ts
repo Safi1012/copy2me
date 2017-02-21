@@ -4,13 +4,6 @@ import { Observable } from 'rxjs/Observable';
 import { DatabaseService } from '../database/database.service';
 import * as firebase from 'firebase';
 
-export enum SignInProvider {
-  Google,
-  Github,
-  Twitter,
-  Demo
-}
-
 @Injectable()
 export class SignInService {
 
@@ -18,6 +11,8 @@ export class SignInService {
     private databaseService: DatabaseService,
     private router: Router,
   ) { }
+
+  // sign-in
 
   public signAnonymously() {
     firebase.auth().signInAnonymously().catch(err => {
@@ -45,10 +40,29 @@ export class SignInService {
         console.log('selected service does not exist');
     }
 
-    this.signInWithProvider(provider).catch(err => {
-      console.log('signInWithProvider: ' + err);
+    this.signInWithProvider(provider)
+      .then(success => {
+        console.log(success);
+        this.router.navigate(['/home']);
+      })
+      .catch(err => {
+        console.log('signInWithProvider: ' + err);
+      });
+  }
+
+  // sign-out
+
+  public signOut() {
+    firebase.auth().signOut().then(() => {
+      console.log('sign-out successfully');
+
+    }, err => {
+      console.log('sign-out error: ' + err);
+
     });
   }
+
+  // observe sign-in state
 
   public observeSignInState() {
     firebase.auth().onAuthStateChanged((user: firebase.User) => {
@@ -59,7 +73,7 @@ export class SignInService {
         });
 
       } else {
-        // this.databaseService.wipeUserData();
+        this.databaseService.wipeUserData();
         this.router.navigate(['/welcome']);
 
       }
@@ -81,16 +95,6 @@ export class SignInService {
     });
   }
 
-  public signOut() {
-    firebase.auth().signOut().then(() => {
-      console.log('sign-out successfully');
-
-    }, err => {
-      console.log('sign-out error: ' + err);
-
-    });
-  }
-
   private signInWithProvider(provider: any): Promise<boolean> {
     firebase.auth().signInWithRedirect(provider);
     return new Promise((resolve, reject) => {
@@ -104,4 +108,11 @@ export class SignInService {
       });
     });
   }
+}
+
+export enum SignInProvider {
+  Google,
+  Github,
+  Twitter,
+  Demo
 }

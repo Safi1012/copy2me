@@ -15,10 +15,10 @@ export class SignInComponent {
   ) { }
 
   public signIn(service: SignInProvider) {
-    // if (service === SignInProvider.Demo) {
-    //   this.signInService.signAnonymously();
-    // } else {
-    //   this.signInService.signInWithService(service);
-    // }
+    if (service === SignInProvider.Demo) {
+      this.signInService.signAnonymously();
+    } else {
+      this.signInService.signInWithService(service);
+    }
   }
 }

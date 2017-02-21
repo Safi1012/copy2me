@@ -23,14 +23,19 @@ import { MaterializeModule } from 'angular2-materialize';
 
 // Pages
 import { WelcomeComponent } from './pages/welcome/welcome.component';
+import { HomeComponent } from './pages/home/home.component';
 
 // Components
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { SignInComponent } from './components/sign-in/sign-in.component';
 
 // Services
+import { FirebaseService } from './services/firebase/firebase.service';
 import { SignInService } from './services/sign-in/sign-in.service';
 import { DatabaseService } from './services/database/database.service';
+
+// Guards
+import { SignInGuard } from './guards/sign-in.guard';
 
 // Global Styles
 import '../styles/_materialize.scss';
@@ -53,6 +58,7 @@ type StoreType = {
   declarations: [
     AppComponent,
     WelcomeComponent,
+    HomeComponent,
     NavBarComponent,
     SignInComponent
   ],
@@ -61,11 +67,13 @@ type StoreType = {
     FormsModule,
     HttpModule,
     MaterializeModule,
-    RouterModule.forRoot(ROUTES, { useHash: true, preloadingStrategy: PreloadAllModules })
+    RouterModule.forRoot(ROUTES, { useHash: false, preloadingStrategy: PreloadAllModules })
   ],
   providers: [ // expose our Services and Providers into Angular's dependency injection
     ENV_PROVIDERS,
     APP_PROVIDERS,
+    SignInGuard,
+    FirebaseService,
     SignInService,
     DatabaseService
   ]
@@ -74,7 +82,8 @@ export class AppModule {
 
   constructor(
     public appRef: ApplicationRef,
-    public appState: AppState
+    public appState: AppState,
+    private firebaseService: FirebaseService
   ) { }
 
   public hmrOnInit(store: StoreType) {
@@ -113,5 +122,4 @@ export class AppModule {
     store.disposeOldHosts();
     delete store.disposeOldHosts;
   }
-
 }

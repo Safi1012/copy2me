@@ -1,6 +1,5 @@
+import { User } from '../../models/user.model';
 import * as localForage from 'localforage';
-
-// Consider using 'import * as ns from "mod"', 'import {a} from "mod"', 'import d from "mod"', or another module format instead.
 
 export class DatabaseService {
 
@@ -9,14 +8,15 @@ export class DatabaseService {
   private user: User;
   private userHistory = [];
 
-  // public fetchHistoryFromCache(): Promise<[any]> {
-  //   return this.getUserHistory().then(history => {
-  //     this.userHistory = history;
-  //     return history;
-  //   });
-  // }
-
   // user management
+
+  public addUser(uid: string, token: string) {
+    let user = new User(uid, token);
+
+    this.lfUser.setItem('user', user).catch(err => {
+      console.log('Localforage - error saving user: ' + err);
+    });
+  }
 
   public getUser(): Promise<User> {
     return new Promise((resolve, reject) => {
@@ -32,48 +32,26 @@ export class DatabaseService {
     });
   }
 
-  public addUser(uid: string, token: string) {
-    let user = new User(uid, token);
+  // Clear database
 
-    this.lfUser.setItem('user', user).catch(err => {
-      console.log('Localforage - error saving user: ' + err);
+  public wipeUserData() {
+    this.removeUser();
+    this.removeUserHistory();
+  }
+
+  public removeUser() {
+    this.lfUser.clear().catch(err => {
+      console.log('Localforage - error clearing user db' + err);
     });
   }
 
-  //   wipeUserData() {
-  //     this.removeUser();
-  //     this.removeUserHistory();
-  //     this.removeMessageQueue();
-  //   }
-
-  //   removeUser() {
-  //     this.lfUser.clear().catch(err => {
-  //       console.log('Localforage - error clearing user db' + err);
-  //     });
-  //   }
-
-  //   removeUserHistory() {
-  //     this.lfHistory.clear().catch(err => {
-  //       console.log('Localforage - error clearing history db' + err);
-  //     });
-  //   }
+  public removeUserHistory() {
+    this.lfHistory.clear().catch(err => {
+      console.log('Localforage - error clearing history db' + err);
+    });
+  }
 
 
-  //   // message queue for sw
-
-  //   addUploadTextMessageToQueue(timestamp: number, text: string, user: User): Promise<Message> {
-  //     let message = new Message(String(new Date().getTime() * -1), user, text);
-
-  //     return this.lfMessages.setItem(String(new Date().getTime() * -1), message).catch(err => {
-  //       console.log('Localforage - error saving message' + err);
-  //     });
-  //   }
-
-  //   removeMessageQueue() {
-  //     this.lfMessages.clear().catch(err => {
-  //       console.log('Localforage - error clearing messages db' + err);
-  //     });
-  //   }
 
 
   //   // offline history data
@@ -150,3 +128,10 @@ export class DatabaseService {
   //   }
 
 }
+
+  // public fetchHistoryFromCache(): Promise<[any]> {
+  //   return this.getUserHistory().then(history => {
+  //     this.userHistory = history;
+  //     return history;
+  //   });
+  // }
