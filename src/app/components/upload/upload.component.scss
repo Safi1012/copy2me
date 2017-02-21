@@ -1,0 +1,114 @@
+@import 'src/styles/_colors.scss';
+
+/*
+* host
+*/
+
+:host {
+  z-index: 5;
+  position: fixed;
+  width: 100vw;
+  margin-top: 56px;
+  @media #{$medium-and-up} {
+    margin-top: 64px;
+  }
+}
+
+
+/*
+* iOS
+*/
+
+.isIOS {
+  margin-top: 24px;
+  @media #{$medium-and-up} {
+    margin-top: 8px;
+  }
+}
+
+
+/*
+* input
+*/
+
+.input-field {
+  margin-top: 35px;
+  @media #{$medium-and-up} {
+    margin-top: 50px;
+  }
+  @media #{$large-and-up} {
+    margin-top: 65px;
+  }
+}
+
+.input-field input[type=text] {
+  margin-right: 10px;
+  width: calc(100% - 55px);
+  color: $input-text-color;
+  border-bottom: 1px solid $input-border-color;
+  box-shadow: 0 1px 0 0 $input-border-color;
+  font-size: 16px;
+}
+
+.input-field input[type=text]:focus {
+  border-bottom: 1px solid $input-border-color-focus;
+  box-shadow: 0 1px 0 0 $input-border-color-focus;
+}
+
+.input-field label {
+  color: $input-label-color;
+}
+
+.input-field input[type=text]:focus+label {
+  color: $input-label-color-focus;
+}
+
+:-ms-input-placeholder,
+::-ms-input-placeholder,
+::-webkit-input-placeholder {
+  color: $input-text-color-placeholder;
+}
+
+
+/*
+* button
+*/
+
+button {
+  background-color: $primary-color-light;
+  box-shadow: none;
+}
+
+button:hover, button:focus {
+  background-color: $primary-button-background-color;
+  box-shadow: none;
+}
+
+
+/*
+* row
+*/
+
+.row {
+  background-color: $primary-color-light;
+  padding-bottom: 5px;
+  margin-bottom: 0;
+  @media #{$medium-and-up} {
+    padding-bottom: 10px
+  }
+  @media #{$large-and-up} {
+    padding-bottom: 20px
+  }
+}
+
+
+/*
+* svg
+*/
+
+svg {
+  width: 32px;
+  height: 32px;
+  fill: white;
+  padding-top: 5px;
+}

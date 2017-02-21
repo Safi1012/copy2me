@@ -28,6 +28,7 @@ import { HomeComponent } from './pages/home/home.component';
 // Components
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { SignInComponent } from './components/sign-in/sign-in.component';
+import { UploadComponent } from './components/upload/upload.component';
 
 // Services
 import { FirebaseService } from './services/firebase/firebase.service';
@@ -60,7 +61,8 @@ type StoreType = {
     WelcomeComponent,
     HomeComponent,
     NavBarComponent,
-    SignInComponent
+    SignInComponent,
+    UploadComponent
   ],
   imports: [
     BrowserModule,
