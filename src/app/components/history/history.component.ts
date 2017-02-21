@@ -12,7 +12,7 @@ import { User } from '../../models/user.model';
 export class HistoryComponent implements OnInit {
 
   public links = [];
-  public isLoading = false;
+
   public isIOS = (navigator.userAgent.match(/(iPad|iPhone|iPod)/g) &&
     (window.navigator as any).standalone ? true : false);
 
@@ -23,16 +23,19 @@ export class HistoryComponent implements OnInit {
   ) { }
 
   public ngOnInit() {
-    debugger;
+    this.historyService.isInitial = true;
+    this.databaseService.clearInitialHistoryDB().then(() => {
 
-    this.fetchLinksFromDB();
+      this.fetchLinksFromDB();
 
-    this.databaseService.getInformationForFetchEvent(true).then(values => {
-      console.log(values);
-      let user = values[0];
-      let startTimestamp = values[1];
+      this.databaseService.getInformationForFetchEvent(true).then(values => {
+        console.log(values);
+        let user = values[0];
+        let startTimestamp = values[1];
 
-      this.fetchLinksFromFirebase(startTimestamp, user);
+        this.fetchLinksFromFirebase(startTimestamp, user);
+      });
+
     });
   }
 
@@ -47,7 +50,14 @@ export class HistoryComponent implements OnInit {
 
     this.historyService.fetchLinksFromFirebase(startTimestamp, user).subscribe(
       value => {
-        this.fetchLinksFromDB();
+        if (this.historyService.isInitial) {
+          this.historyService.isInitial = false;
+          this.databaseService.overrideOldHistoryDB().then(() => {
+            this.fetchLinksFromDB();
+          });
+        } else {
+          this.fetchLinksFromDB();
+        }
       },
       err => {
         console.log(err);

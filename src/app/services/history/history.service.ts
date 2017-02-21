@@ -7,10 +7,12 @@ import { DatabaseService } from '../database/database.service';
 import { User } from '../../models/user.model';
 import { HistoryEntry } from '../../models/history-entry.model';
 
-const CHUNK_SIZE = 999;
+const CHUNK_SIZE = 15;
 
 @Injectable()
 export class HistoryService {
+
+  public isInitial = true;
 
   constructor(
     private databaseService: DatabaseService
@@ -25,6 +27,14 @@ export class HistoryService {
 
       historyRef.on('child_added', data => {
         this.databaseService.addLinkToHistoryDB(data.val().timestamp, data.val().text);
+        // if (this.isInitial) {
+        //   this.isInitial = false;
+        //   this.databaseService.clearHistoryDB().then(() => {
+        //     this.databaseService.addLinkToHistoryDB(data.val().timestamp, data.val().text);
+        //   });
+        // } else {
+        //   this.databaseService.addLinkToHistoryDB(data.val().timestamp, data.val().text);
+        // }
         observer.next();
       });
 

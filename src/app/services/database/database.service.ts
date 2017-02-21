@@ -5,6 +5,7 @@ import { HistoryEntry } from '../../models/history-entry.model';
 export class DatabaseService {
 
   private historyDB = localForage.createInstance({ name: 'copy2me_history' });
+  private historyIntialDB = localForage.createInstance({ name: 'copy2me_history_initial' });
   private userDB = localForage.createInstance({ name: 'copy2me_user' });
   private user: User;
   private userHistory = [];
@@ -72,6 +73,7 @@ export class DatabaseService {
   public wipeAllDatabases() {
     this.clearUserDB();
     this.clearHistoryDB();
+    this.clearInitialHistoryDB();
   }
 
   public clearUserDB() {
@@ -81,9 +83,66 @@ export class DatabaseService {
   }
 
   public clearHistoryDB(): Promise<void> {
-    return this.historyDB.clear().catch(err => {
-      console.log('Localforage - error clearing history db' + err);
+    return this.historyDB.clear();
+  }
+
+  public clearInitialHistoryDB(): Promise<void> {
+    return this.historyIntialDB.clear();
+  }
+
+  public overrideOldHistoryDB(): Promise<void> {
+    return this.clearHistoryDB().then(() => {
+      this.historyDB = this.historyIntialDB;
     });
+
+
+
+
+
+    // console.log('historyDB');
+    // this.historyDB.iterate((link, timestamp, iterationNumber) => {
+    //   console.log(link + timestamp + iterationNumber);
+    // }).then(() => {
+
+
+    //   console.log('historyIntitialDB');
+    //   this.historyIntialDB.iterate((link, timestamp, iterationNumber) => {
+    //     console.log(link + timestamp + iterationNumber);
+    //   }).then(() => {
+    //     this.historyDB = this.historyIntialDB;
+
+
+    //     this.historyDB.iterate((link, timestamp, iterationNumber) => {
+    //       console.log(link + timestamp + iterationNumber + 'historyDB');
+    //     }).then(() => {
+    //       console.log('historyDB');
+
+    //     });
+
+
+    //   });
+
+
+
+
+
+
+
+
+
+
+
+    // this.clearHistoryDB().then(() => {
+
+    //   return Promise.all([
+    //     this.historyIntialDB.iterate((link, timestamp, iterationNumber) => {
+    //       let historyEntry = new HistoryEntry(Number(timestamp), link);
+
+    //       return this.historyDB.setItem(timestamp, historyEntry);
+    //     })
+    //   ]);
+    // });
+
   }
 
   // offline history data
@@ -108,12 +167,23 @@ export class DatabaseService {
     });
   }
 
-  public addLinkToHistoryDB(timestamp: number, text: string): Promise<HistoryEntry> {
+  public addLinkToHistoryDB(timestamp: number, text: string): Promise<HistoryEntry[]> {
     let historyEntry = new HistoryEntry(timestamp * -1, text);
 
-    return this.historyDB.setItem(String(timestamp * -1), historyEntry).catch(err => {
+    let historyDbPromise = this.historyDB.setItem(String(timestamp * -1), historyEntry).catch(err => {
       console.log('Localforage - error saving history entry' + err);
     });
+
+    let historyIntitialDbPromise = this.historyIntialDB.setItem(String(timestamp * -1), historyEntry).catch(err => {
+      console.log('Localforage - error saving history entry' + err);
+    });
+
+    return Promise.all([historyDbPromise, historyIntitialDbPromise]);
+
+
+    // return this.historyDB.setItem(String(timestamp * -1), historyEntry).catch(err => {
+    //   console.log('Localforage - error saving history entry' + err);
+    // });
   }
 
   public removeLinkFromHistoryDB(timestamp: number) {
