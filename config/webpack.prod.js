@@ -156,7 +156,7 @@ module.exports = function(env) {
        *
        * See: https://github.com/webpack/extract-text-webpack-plugin
        */
-      new ExtractTextPlugin('[name].[contenthash].css'),
+      new ExtractTextPlugin('styles.[contenthash].css'),
 
       /**
        * Plugin: DefinePlugin
