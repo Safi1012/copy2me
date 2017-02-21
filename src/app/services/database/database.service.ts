@@ -33,9 +33,43 @@ export class DatabaseService {
     });
   }
 
+  public getNewestTimestamp(isInitial: boolean): Promise<number> {
+    let history = [];
+
+    return new Promise((resolve) => {
+
+      if (!isInitial) {
+        this.historyDB.iterate((value, key, iterationNumber) => {
+          history.push(value);
+
+        }).then(() => {
+          if (history.length === 0) {
+            resolve(-9999999999999); // force small timestamp
+          } else {
+            // history.sort(this.compareTimestamp);
+            resolve((history[history.length - 1].timestamp * -1) + 1);
+          }
+
+        }).catch(err => {
+          console.log('Localforage - error loading history' + err);
+
+        });
+      } else {
+        resolve(-9999999999999); // force small timestamp
+      }
+    });
+  }
+
+  public getInformationForFetchEvent(isInitial: boolean): Promise<[User, number]> {
+    let userPromise = this.getUser();
+    let newestTimestampPromise = this.getNewestTimestamp(isInitial);
+
+    return Promise.all([userPromise, newestTimestampPromise]);
+  }
+
   // Clear database
 
-  public wipeAllDB() {
+  public wipeAllDatabases() {
     this.clearUserDB();
     this.clearHistoryDB();
   }
@@ -46,13 +80,33 @@ export class DatabaseService {
     });
   }
 
-  public clearHistoryDB() {
-    this.historyDB.clear().catch(err => {
+  public clearHistoryDB(): Promise<void> {
+    return this.historyDB.clear().catch(err => {
       console.log('Localforage - error clearing history db' + err);
     });
   }
 
   // offline history data
+
+  public getLinksFromHistoryDB(): Promise<[any]> {
+    let history = [];
+
+    return new Promise((resolve) => {
+
+      this.historyDB.iterate((value, key, iterationNumber) => {
+        history.push(value);
+
+      }).then(() => {
+        history.sort(this.compareTimestamp);
+        resolve(history);
+
+      }).catch(err => {
+        console.log('Localforage - error loading history' + err);
+        resolve([]);
+
+      });
+    });
+  }
 
   public addLinkToHistoryDB(timestamp: number, text: string): Promise<HistoryEntry> {
     let historyEntry = new HistoryEntry(timestamp * -1, text);
@@ -91,63 +145,21 @@ export class DatabaseService {
 
 
 
-  //   getUserHistory(): Promise<[any]> {
-  //     let history = [];
 
-  //     return new Promise((resolve) => {
 
-  //       this.lfHistory.iterate((value, key, iterationNumber) => {
-  //         history.push(value);
 
-  //       }).then(() => {
-  //         history.sort(this.compareTimestamp);
-  //         resolve(history);
 
-  //       }).catch(err => {
-  //         console.log('Localforage - error loading history' + err);
-  //         resolve([]);
 
-  //       });
-  //     });
-  //   }
 
-  //   getInformationForFetchEvent(): Promise<[User, number]> {
-  //     let userPromise = this.getUser();
-  //     let newestTimestampPromise = this.getNewestTimestamp();
-
-  //     return Promise.all([userPromise, newestTimestampPromise]);
-  //   }
-
-  //   getNewestTimestamp(): Promise<number> {
-  //     let history = [];
-
-  //     return new Promise((resolve) => {
-
-  //       this.lfHistory.iterate((value, key, iterationNumber) => {
-  //         history.push(value);
-
-  //       }).then(() => {
-  //         if (history.length === 0) {
-  //           resolve(-9999999999999); // force small timestamp
-  //         } else {
-  //           history.sort(this.compareTimestamp);
-  //           resolve((history[history.length - 1].timestamp * -1) + 1);
-  //         }
-
-  //       }).catch(err => {
-  //         console.log('Localforage - error loading history' + err);
-
-  //       });
-  //     });
-  //   }
-
-  //   private compareTimestamp(a, b) {
-  //     if (a.timestamp > b.timestamp)
-  //       return -1;
-  //     if (a.timestamp < b.timestamp)
-  //       return 1;
-  //     return 0;
-  //   }
+  private compareTimestamp(a, b) {
+    if (a.timestamp > b.timestamp) {
+      return -1;
+    }
+    if (a.timestamp < b.timestamp) {
+      return 1;
+    }
+    return 0;
+  }
 
 }
 

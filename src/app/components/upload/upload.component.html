@@ -4,7 +4,7 @@
       <div class="col l3"></div>
       <div class="input-field col s12 l6">
 
-        <input placeholder="http://..." id="link" type="text" name="upload" class="validate" [(ngModel)]="inputFieldText">
+        <input #linkInput placeholder="http://..." id="link" type="text" name="upload" class="validate" [(ngModel)]="inputFieldText">
         <label for="link">Paste your link</label>
         <button class="btn-floating waves-effect waves-light button_upload" type="submit" name="action" (click)="uploadLinkText()">
           <svg class="icon">

@@ -1,6 +1,6 @@
 import { Component, ApplicationRef, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-// import { HistoryService } from '../../services/history/history.service';
+import { HistoryService } from '../../services/history/history.service';
 import { DatabaseService } from '../../services/database/database.service';
 import { User } from '../../models/user.model';
 
@@ -9,7 +9,7 @@ import { User } from '../../models/user.model';
   templateUrl: './history.component.html',
   styleUrls: ['./history.component.scss']
 })
-export class HistoryComponent {
+export class HistoryComponent implements OnInit {
 
   public links = [];
   public isLoading = false;
@@ -17,39 +17,69 @@ export class HistoryComponent {
     (window.navigator as any).standalone ? true : false);
 
   constructor(
-    // private historyService: HistoryService,
+    private historyService: HistoryService,
     private databaseService: DatabaseService,
     private appRef: ApplicationRef
-  ) {
-    // this.databaseService.fetchHistoryFromCache().then(result => {
-    //   this.links = result;
-    //   this.appRef.tick();
-    // });
+  ) { }
+
+  public ngOnInit() {
+    debugger;
+
+    this.fetchLinksFromDB();
+
+    this.databaseService.getInformationForFetchEvent(true).then(values => {
+      console.log(values);
+      let user = values[0];
+      let startTimestamp = values[1];
+
+      this.fetchLinksFromFirebase(startTimestamp, user);
+    });
   }
 
-  // ngOnInit() {
-  //   this.fetchLinks();
+  public fetchLinksFromDB() {
+    this.databaseService.getLinksFromHistoryDB().then(links => {
+      this.links = links;
+      this.appRef.tick();
+    });
+  }
+
+  public fetchLinksFromFirebase(startTimestamp: number, user: User) {
+
+    this.historyService.fetchLinksFromFirebase(startTimestamp, user).subscribe(
+      value => {
+        this.fetchLinksFromDB();
+      },
+      err => {
+        console.log(err);
+      },
+      () => {
+        console.log('completed');
+      }
+    );
+  };
+
+
+
+
+
+  // if (!this.isLoading) { // throttle
+  //   this.isLoading = true;
+
+  //   this.databaseService.getInformationForFetchEvent().then(values => {
+  //     this.isLoading = false;
+  //     let user = values[0];
+  //     let startTimestamp = values[1];
+
+  //     this.historyService.fetchTextFromFirebase(startTimestamp, user).subscribe(
+  //       value => {
+  //         this.links = value;
+  //         this.appRef.tick();
+  //       }
+  //     );
+  //   });
   // }
 
-  public fetchLinks() {
 
-    // if (!this.isLoading) { // throttle
-    //   this.isLoading = true;
-
-    //   this.databaseService.getInformationForFetchEvent().then(values => {
-    //     this.isLoading = false;
-    //     let user = values[0];
-    //     let startTimestamp = values[1];
-
-    //     this.historyService.fetchTextFromFirebase(startTimestamp, user).subscribe(
-    //       value => {
-    //         this.links = value;
-    //         this.appRef.tick();
-    //       }
-    //     );
-    //   });
-    // }
-  }
 
   // onScroll() {
   //   console.log('scroll');

@@ -73,7 +73,7 @@ export class SignInService {
         });
 
       } else {
-        this.databaseService.wipeUserData();
+        this.databaseService.wipeAllDatabases();
         this.router.navigate(['/welcome']);
 
       }
