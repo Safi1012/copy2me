@@ -1,0 +1,21 @@
+<div [class.isIOS]="isIOS" class="row search-results" infinite-scroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="800" (scrolled)="onScroll()">
+  <ul class="collection col s12">
+    <div class="col l3"></div>
+    <div class="col s12 l6">
+
+      <li class="collection-item" *ngFor="let link of links">
+        <div class="links">
+          <input readonly="readonly" type="text" value="{{link.text}}" id="{{link.timestamp}}" />
+          <p>{{link.timestamp | date}}</p>
+        </div>
+        <button class="btn-floating waves-effect waves-light button_upload secondary-content" type="submit" name="action" onclick="Materialize.toast('copied', 2000)" ngxClipboard [cbContent]="link.text" (cbOnError)="copyToClipboardOnError()" (cbOnSuccess)="copyToClipboardOnSuccess()">
+          <svg class="icon">
+            <use xlink:href="assets/icons/icons.svg#icon-copy"></use>
+          </svg>
+        </button>
+      </li>
+      <h1 *ngIf="links && links.length === 0">Start adding new links! <br><br>Just paste a link and press upload :)</h1>
+
+    </div>
+  </ul>
+</div>

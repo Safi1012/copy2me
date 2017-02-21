@@ -84,7 +84,8 @@ type StoreType = {
     SignInGuard,
     FirebaseService,
     SignInService,
-    DatabaseService
+    DatabaseService,
+    HistoryService
   ]
 })
 export class AppModule {

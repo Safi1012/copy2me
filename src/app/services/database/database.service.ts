@@ -1,10 +1,11 @@
 import { User } from '../../models/user.model';
 import * as localForage from 'localforage';
+import { HistoryEntry } from '../../models/history-entry.model';
 
 export class DatabaseService {
 
-  private lfHistory = localForage.createInstance({ name: 'copy2me_history' });
-  private lfUser = localForage.createInstance({ name: 'copy2me_user' });
+  private historyDB = localForage.createInstance({ name: 'copy2me_history' });
+  private userDB = localForage.createInstance({ name: 'copy2me_user' });
   private user: User;
   private userHistory = [];
 
@@ -13,7 +14,7 @@ export class DatabaseService {
   public addUser(uid: string, token: string) {
     let user = new User(uid, token);
 
-    this.lfUser.setItem('user', user).catch(err => {
+    this.userDB.setItem('user', user).catch(err => {
       console.log('Localforage - error saving user: ' + err);
     });
   }
@@ -21,7 +22,7 @@ export class DatabaseService {
   public getUser(): Promise<User> {
     return new Promise((resolve, reject) => {
 
-      this.lfUser.getItem('user').then(user => {
+      this.userDB.getItem('user').then(user => {
         resolve(user);
 
       }).catch(err => {
@@ -34,40 +35,61 @@ export class DatabaseService {
 
   // Clear database
 
-  public wipeUserData() {
-    this.removeUser();
-    this.removeUserHistory();
+  public wipeAllDB() {
+    this.clearUserDB();
+    this.clearHistoryDB();
   }
 
-  public removeUser() {
-    this.lfUser.clear().catch(err => {
+  public clearUserDB() {
+    this.userDB.clear().catch(err => {
       console.log('Localforage - error clearing user db' + err);
     });
   }
 
-  public removeUserHistory() {
-    this.lfHistory.clear().catch(err => {
+  public clearHistoryDB() {
+    this.historyDB.clear().catch(err => {
       console.log('Localforage - error clearing history db' + err);
     });
   }
 
+  // offline history data
 
+  public addLinkToHistoryDB(timestamp: number, text: string): Promise<HistoryEntry> {
+    let historyEntry = new HistoryEntry(timestamp * -1, text);
 
+    return this.historyDB.setItem(String(timestamp * -1), historyEntry).catch(err => {
+      console.log('Localforage - error saving history entry' + err);
+    });
+  }
 
-  //   // offline history data
+  public removeLinkFromHistoryDB(timestamp: number) {
+    return this.historyDB.removeItem(String(timestamp * -1)).catch(err => {
+      console.log('Localforage - error removing entry from historyDB' + err);
+    });
+  }
+
+  public editLinkInHistoryDB(timestamp: number, text: string) {
+    let historyEntry = new HistoryEntry(timestamp * -1, text);
+
+    return this.historyDB.getItem(String(timestamp * -1))
+      .then(item => {
+        item = historyEntry;
+        this.historyDB.setItem(String(timestamp * -1), item).catch(err => {
+          console.log('Localforage - error editing history entry' + err);
+        });
+      })
+      .catch(err => {
+        console.log('Localforage - error editing history entry' + err);
+      });
+  }
+
 
   //   addToLocalHistory(timestamp: number, text: string) {
   //     this.userHistory.push(new HistoryEntry(timestamp * -1, text));
   //     this.userHistory.sort(this.compareTimestamp);
   //   }
 
-  //   addTextToDbHistory(timestamp: number, text: string) {
-  //     let historyEntry = new HistoryEntry(timestamp * -1, text);
 
-  //     this.lfHistory.setItem(String(timestamp * -1), historyEntry).catch(err => {
-  //       console.log('Localforage - error saving history entry' + err);
-  //     });
-  //   }
 
   //   getUserHistory(): Promise<[any]> {
   //     let history = [];

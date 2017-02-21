@@ -17,7 +17,7 @@ export class NavBarComponent {
   constructor(
     public router: Router,
     private signInService: SignInService,
-    // private historyService: HistoryService,
+    private historyService: HistoryService,
   ) { }
 
   public signOut() {
@@ -25,6 +25,6 @@ export class NavBarComponent {
   }
 
   public clearHistory() {
-    // this.historyService.clearHistory();
+    this.historyService.clearHistory();
   }
 }

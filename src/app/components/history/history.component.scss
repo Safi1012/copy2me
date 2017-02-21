@@ -1,0 +1,117 @@
+@import 'src/styles/_colors.scss';
+
+/*
+* row
+*/
+
+.row {
+  padding-top: 165px;
+  z-index: 0;
+  margin-bottom: 0;
+  @media #{$medium-and-up} {
+    padding-top: 199px;
+  }
+  @media #{$large-and-up} {
+    padding-top: 235px;
+  }
+  height: 100vh; // Todo: substract padding-top;
+}
+
+
+/*
+* iOS
+*/
+
+.isIOS {
+  padding-top: 189px;
+  @media #{$medium-and-up} {
+    padding-top: 206px;
+  }
+  @media #{$large-and-up} {
+    padding-top: 242px;
+  }
+}
+
+
+/*
+* list
+*/
+
+ul.collection {
+  margin-top: 0;
+  margin-bottom: 0;
+  border: 0;
+}
+
+li.collection-item {
+  padding: 20px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+li input {
+  border: none;
+  color: $primary-text-color-dark;
+  margin: 0;
+  margin-top: -10px;
+  margin-right: 10px;
+  text-overflow: ellipsis;
+}
+
+
+/*
+* button
+*/
+
+button {
+  margin-right: 5px;
+  background-color: $secondary-button-background-color;
+  box-shadow: none;
+}
+
+i.material-icons {
+  color: $accent-color;
+}
+
+button:hover {
+  background-color: #ffe0b2;
+  box-shadow: none;
+}
+
+
+/*
+* svg
+*/
+
+svg {
+  width: 32px;
+  height: 32px;
+  fill: $accent-color;
+  padding-top: 5px;
+}
+
+
+/*
+* text
+*/
+
+h1 {
+  font-size: 2em;
+  color: $primary-text-color-light;
+  text-align: center;
+  padding-top: 10%;
+}
+
+p {
+  margin: 0;
+  color: $primary-text-color-light;
+}
+
+.links {
+  flex-grow: 2;
+}
+
+input {
+  font-size: 16px;
+}
