@@ -20,6 +20,8 @@ import 'materialize-css';
 
 // Modules
 import { MaterializeModule } from 'angular2-materialize';
+import { InfiniteScrollModule } from 'angular2-infinite-scroll';
+import { ClipboardModule } from 'ngx-clipboard';
 
 // Pages
 import { WelcomeComponent } from './pages/welcome/welcome.component';
@@ -29,11 +31,13 @@ import { HomeComponent } from './pages/home/home.component';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { SignInComponent } from './components/sign-in/sign-in.component';
 import { UploadComponent } from './components/upload/upload.component';
+import { HistoryComponent } from './components/history/history.component';
 
 // Services
 import { FirebaseService } from './services/firebase/firebase.service';
 import { SignInService } from './services/sign-in/sign-in.service';
 import { DatabaseService } from './services/database/database.service';
+import { HistoryService } from './services/history/history.service';
 
 // Guards
 import { SignInGuard } from './guards/sign-in.guard';
@@ -62,13 +66,16 @@ type StoreType = {
     HomeComponent,
     NavBarComponent,
     SignInComponent,
-    UploadComponent
+    UploadComponent,
+    HistoryComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
     MaterializeModule,
+    InfiniteScrollModule,
+    ClipboardModule,
     RouterModule.forRoot(ROUTES, { useHash: false, preloadingStrategy: PreloadAllModules })
   ],
   providers: [ // expose our Services and Providers into Angular's dependency injection
