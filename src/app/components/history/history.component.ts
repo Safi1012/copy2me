@@ -82,29 +82,6 @@ export class HistoryComponent implements OnInit {
     });
   }
 
-
-
-  // if (!this.isLoading) { // throttle
-  //   this.isLoading = true;
-
-  //   this.databaseService.getInformationForFetchEvent().then(values => {
-  //     this.isLoading = false;
-  //     let user = values[0];
-  //     let startTimestamp = values[1];
-
-  //     this.historyService.fetchTextFromFirebase(startTimestamp, user).subscribe(
-  //       value => {
-  //         this.links = value;
-  //         this.appRef.tick();
-  //       }
-  //     );
-  //   });
-  // }
-
-
-
-
-
   // copy to clipboard
 
   public copyToClipboardOnSuccess() {

@@ -39,14 +39,7 @@ export class SignInService {
       default:
         console.log('selected service does not exist');
     }
-
-    this.signInWithProvider(provider)
-      .then(success => {
-        console.log(success);
-      })
-      .catch(err => {
-        console.log('signInWithProvider: ' + err);
-      });
+    this.signInWithProvider(provider);
   }
 
   // sign-out
@@ -94,18 +87,15 @@ export class SignInService {
     });
   }
 
-  private signInWithProvider(provider: any): Promise<boolean> {
+  private signInWithProvider(provider: any) {
     firebase.auth().signInWithRedirect(provider);
-    return new Promise((resolve, reject) => {
-
-      firebase.auth().getRedirectResult().then(result => {
-        resolve();
-
-      }).catch((error: any) => {
-        reject();
-
+    firebase.auth().getRedirectResult()
+      .then(success => {
+        console.log('sign-in success');
+      })
+      .catch(err => {
+        // this.router.navigate(['/welcome']);
       });
-    });
   }
 }
 

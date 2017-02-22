@@ -88,9 +88,19 @@ export class DatabaseService {
     return this.historyIntialDB.clear();
   }
 
-  public overrideOldHistoryDB(): Promise<void> {
-    return this.clearHistoryDB().then(() => {
-      this.historyDB = this.historyIntialDB;
+  public overrideOldHistoryDB() {
+
+    return this.historyDB.clear().then(() => {
+      let promises = [];
+
+      return this.historyIntialDB.iterate((value, key, iterationNumber) => {
+        let historyEntry = value as HistoryEntry;
+        promises.push(this.historyDB.setItem(String(historyEntry.timestamp * -1), historyEntry));
+
+      }).then(() => {
+        return Promise.all(promises);
+
+      });
     });
   }
 
@@ -98,7 +108,6 @@ export class DatabaseService {
 
   public getLinksFromHistoryDB(): Promise<[any]> {
     let history = [];
-
     return new Promise((resolve) => {
 
       this.historyDB.iterate((value, key, iterationNumber) => {
@@ -162,15 +171,3 @@ export class DatabaseService {
   }
 
 }
-
-//   addToLocalHistory(timestamp: number, text: string) {
-  //     this.userHistory.push(new HistoryEntry(timestamp * -1, text));
-  //     this.userHistory.sort(this.compareTimestamp);
-  //   }
-
-  // public fetchHistoryFromCache(): Promise<[any]> {
-  //   return this.getUserHistory().then(history => {
-  //     this.userHistory = history;
-  //     return history;
-  //   });
-  // }

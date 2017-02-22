@@ -26,8 +26,9 @@ export class HistoryService {
         .orderByChild('timestamp').startAt(startTimestamp).limitToFirst(CHUNK_SIZE);
 
       historyRef.on('child_added', data => {
-        this.databaseService.addLinkToHistoryDB(data.val().timestamp, data.val().text);
-        observer.next();
+        this.databaseService.addLinkToHistoryDB(data.val().timestamp, data.val().text).then(() => {
+          observer.next();
+        });
       });
 
       historyRef.on('child_removed', data => {
@@ -47,6 +48,7 @@ export class HistoryService {
     this.databaseService.getUser().then(user => {
       firebase.database().ref('links/' + user.uid).child('/history').remove();
       this.databaseService.clearHistoryDB();
+      this.databaseService.clearInitialHistoryDB();
     });
   }
 }
