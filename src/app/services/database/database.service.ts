@@ -77,9 +77,7 @@ export class DatabaseService {
   }
 
   public clearUserDB() {
-    this.userDB.clear().catch(err => {
-      console.log('Localforage - error clearing user db' + err);
-    });
+    return this.userDB.clear();
   }
 
   public clearHistoryDB(): Promise<void> {
@@ -94,55 +92,6 @@ export class DatabaseService {
     return this.clearHistoryDB().then(() => {
       this.historyDB = this.historyIntialDB;
     });
-
-
-
-
-
-    // console.log('historyDB');
-    // this.historyDB.iterate((link, timestamp, iterationNumber) => {
-    //   console.log(link + timestamp + iterationNumber);
-    // }).then(() => {
-
-
-    //   console.log('historyIntitialDB');
-    //   this.historyIntialDB.iterate((link, timestamp, iterationNumber) => {
-    //     console.log(link + timestamp + iterationNumber);
-    //   }).then(() => {
-    //     this.historyDB = this.historyIntialDB;
-
-
-    //     this.historyDB.iterate((link, timestamp, iterationNumber) => {
-    //       console.log(link + timestamp + iterationNumber + 'historyDB');
-    //     }).then(() => {
-    //       console.log('historyDB');
-
-    //     });
-
-
-    //   });
-
-
-
-
-
-
-
-
-
-
-
-    // this.clearHistoryDB().then(() => {
-
-    //   return Promise.all([
-    //     this.historyIntialDB.iterate((link, timestamp, iterationNumber) => {
-    //       let historyEntry = new HistoryEntry(Number(timestamp), link);
-
-    //       return this.historyDB.setItem(timestamp, historyEntry);
-    //     })
-    //   ]);
-    // });
-
   }
 
   // offline history data
@@ -179,11 +128,6 @@ export class DatabaseService {
     });
 
     return Promise.all([historyDbPromise, historyIntitialDbPromise]);
-
-
-    // return this.historyDB.setItem(String(timestamp * -1), historyEntry).catch(err => {
-    //   console.log('Localforage - error saving history entry' + err);
-    // });
   }
 
   public removeLinkFromHistoryDB(timestamp: number) {
@@ -207,20 +151,6 @@ export class DatabaseService {
       });
   }
 
-
-  //   addToLocalHistory(timestamp: number, text: string) {
-  //     this.userHistory.push(new HistoryEntry(timestamp * -1, text));
-  //     this.userHistory.sort(this.compareTimestamp);
-  //   }
-
-
-
-
-
-
-
-
-
   private compareTimestamp(a, b) {
     if (a.timestamp > b.timestamp) {
       return -1;
@@ -232,6 +162,11 @@ export class DatabaseService {
   }
 
 }
+
+//   addToLocalHistory(timestamp: number, text: string) {
+  //     this.userHistory.push(new HistoryEntry(timestamp * -1, text));
+  //     this.userHistory.sort(this.compareTimestamp);
+  //   }
 
   // public fetchHistoryFromCache(): Promise<[any]> {
   //   return this.getUserHistory().then(history => {

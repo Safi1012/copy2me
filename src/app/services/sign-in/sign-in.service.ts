@@ -43,7 +43,6 @@ export class SignInService {
     this.signInWithProvider(provider)
       .then(success => {
         console.log(success);
-        this.router.navigate(['/home']);
       })
       .catch(err => {
         console.log('signInWithProvider: ' + err);

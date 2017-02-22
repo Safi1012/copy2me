@@ -27,14 +27,6 @@ export class HistoryService {
 
       historyRef.on('child_added', data => {
         this.databaseService.addLinkToHistoryDB(data.val().timestamp, data.val().text);
-        // if (this.isInitial) {
-        //   this.isInitial = false;
-        //   this.databaseService.clearHistoryDB().then(() => {
-        //     this.databaseService.addLinkToHistoryDB(data.val().timestamp, data.val().text);
-        //   });
-        // } else {
-        //   this.databaseService.addLinkToHistoryDB(data.val().timestamp, data.val().text);
-        // }
         observer.next();
       });
 
