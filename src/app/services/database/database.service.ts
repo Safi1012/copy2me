@@ -116,7 +116,7 @@ export class DatabaseService {
     });
   }
 
-  public addLinkToHistoryDB(timestamp: number, text: string): Promise<HistoryEntry[]> {
+  public addLinkToHistoryDB(timestamp: number, text: string): Promise<[void | HistoryEntry, void | HistoryEntry]> {
     let historyEntry = new HistoryEntry(timestamp * -1, text);
 
     let historyDbPromise = this.historyDB.setItem(String(timestamp * -1), historyEntry).catch(err => {
