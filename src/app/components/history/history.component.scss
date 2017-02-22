@@ -74,7 +74,8 @@ i.material-icons {
   color: $accent-color;
 }
 
-button:hover {
+button:hover,
+button:focus {
   background-color: #ffe0b2;
   box-shadow: none;
 }
