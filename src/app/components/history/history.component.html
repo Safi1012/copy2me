@@ -1,4 +1,4 @@
-<div [class.isIOS]="isIOS" class="row search-results" infinite-scroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="800"> <!-- (scrolled)="onScroll()" -->
+<div [class.isIOS]="isIOS" class="row search-results" infinite-scroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="600" (scrolled)="onScroll()"> <!-- (scrolled)="onScroll()" -->
   <ul class="collection col s12">
     <div class="col l3"></div>
     <div class="col s12 l6">

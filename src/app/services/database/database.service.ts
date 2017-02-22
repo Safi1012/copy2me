@@ -47,7 +47,7 @@ export class DatabaseService {
           if (history.length === 0) {
             resolve(-9999999999999); // force small timestamp
           } else {
-            // history.sort(this.compareTimestamp);
+            history.sort(this.compareTimestamp);
             resolve((history[history.length - 1].timestamp * -1) + 1);
           }
 

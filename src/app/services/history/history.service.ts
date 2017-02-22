@@ -7,7 +7,7 @@ import { DatabaseService } from '../database/database.service';
 import { User } from '../../models/user.model';
 import { HistoryEntry } from '../../models/history-entry.model';
 
-const CHUNK_SIZE = 15;
+const CHUNK_SIZE = 30;
 
 @Injectable()
 export class HistoryService {
@@ -40,7 +40,7 @@ export class HistoryService {
         observer.next();
       });
 
-    }).debounceTime(150);
+    }).debounceTime(25);
   }
 
   public clearHistory() {

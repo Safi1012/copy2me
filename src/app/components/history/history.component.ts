@@ -68,7 +68,19 @@ export class HistoryComponent implements OnInit {
     );
   };
 
+  public onScroll() {
+    console.log('scroll');
 
+    // outsource
+    this.databaseService.getInformationForFetchEvent(this.historyService.isInitial).then(values => {
+      console.log(values);
+      console.log(this.historyService.isInitial);
+      let user = values[0];
+      let startTimestamp = values[1];
+
+      this.fetchLinksFromFirebase(startTimestamp, user);
+    });
+  }
 
 
 
@@ -91,10 +103,7 @@ export class HistoryComponent implements OnInit {
 
 
 
-  // onScroll() {
-  //   console.log('scroll');
-  //   this.fetchLinks();
-  // }
+
 
   // copy to clipboard
 
