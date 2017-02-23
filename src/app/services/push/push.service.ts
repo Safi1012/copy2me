@@ -61,6 +61,8 @@ export class PushService {
         console.log('[push] failed to unsubscribe');
       });
     });
+
+    // ToDo: remove push key from firebase
   }
 
   private storeSubscriptionInFirebase(pushSubscription: PushSubscription) {
