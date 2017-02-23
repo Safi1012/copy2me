@@ -29,7 +29,6 @@ export class HistoryComponent implements OnInit {
       this.fetchLinksFromDB();
 
       this.databaseService.getInformationForFetchEvent(true).then(values => {
-        console.log(values);
         let user = values[0];
         let startTimestamp = values[1];
 
