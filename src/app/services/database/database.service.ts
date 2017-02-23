@@ -1,4 +1,5 @@
 import { User } from '../../models/user.model';
+import { Push } from '../../models/push.model';
 import * as localForage from 'localforage';
 import { HistoryEntry } from '../../models/history-entry.model';
 
@@ -13,7 +14,8 @@ export class DatabaseService {
   // user management
 
   public addUser(uid: string, token: string) {
-    let user = new User(uid, token);
+    let push = new Push('', '', '');
+    let user = new User(uid, token, push);
 
     this.userDB.setItem('user', user).catch(err => {
       console.log('Localforage - error saving user: ' + err);
@@ -31,6 +33,12 @@ export class DatabaseService {
         reject();
 
       });
+    });
+  }
+
+  public updateUser(user: User) {
+    this.userDB.setItem('user', user).catch(err => {
+      console.log('Localforage - error saving user: ' + err);
     });
   }
 
