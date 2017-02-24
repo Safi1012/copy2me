@@ -12,9 +12,23 @@ export class PushService {
 
     if (this.isPushSupported()) {
       this.checkPushSubscription().then(pushSubscription => {
+
+        this.subscribeToPushService();
+
         if (!pushSubscription) {
           this.subscribeToPushService();
         } else {
+
+          let push = new Push(
+            pushSubscription.endpoint,
+            (pushSubscription as any).toJSON().keys.auth,
+            (pushSubscription as any).toJSON().keys.p256dh
+          );
+
+          this.databaseService.getUser().then(user => {
+            this.databaseService.updateUser(new User(user.uid, user.token, push));
+          });
+
           console.log('[push] is subscribed');
         }
       });
