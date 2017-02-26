@@ -27,7 +27,6 @@ build/Release
 # OS generated files #
 .DS_Store
 ehthumbs.db
-Icon?
 Thumbs.db
 
 # Node Files #
@@ -59,17 +58,14 @@ dll/
 
 # Doc #
 /doc/
+/report/
 
 # IDE #
 .idea/
 *.swp
-
 
 # Angular #
 *.ngfactory.ts
 *.css.shim.ts
 *.ngsummary.json
 *.shim.ngstyle.ts
-
-# Report
-/report
