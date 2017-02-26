@@ -36,9 +36,12 @@ export class DatabaseService {
     });
   }
 
-  public updateUser(user: User) {
-    this.userDB.setItem('user', user).catch(err => {
-      console.log('Localforage - error saving user: ' + err);
+  public setUserSubscriptionData(push: Push) {
+    this.getUser().then(user => {
+      let updatedUser = new User(user.uid, user.token, push);
+      this.userDB.setItem('user', user).catch(err => {
+        console.log('Localforage - error saving user: ' + err);
+      });
     });
   }
 
@@ -177,5 +180,4 @@ export class DatabaseService {
     }
     return 0;
   }
-
 }

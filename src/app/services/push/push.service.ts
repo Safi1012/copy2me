@@ -8,31 +8,51 @@ import { Push } from '../../models/push.model';
 @Injectable()
 export class PushService {
 
-  constructor(private databaseService: DatabaseService) {
+  public isSubscribed = false;
 
-    if (this.isPushSupported()) {
-      this.checkPushSubscription().then(pushSubscription => {
+  constructor(private databaseService: DatabaseService) {}
 
-        this.subscribeToPushService();
+  public loadSubscriptionState(): Promise<{}> {
+    return new Promise((resolve, reject) => {
+      if (this.isPushSupported()) {
 
-        if (!pushSubscription) {
-          this.subscribeToPushService();
-        } else {
+        this.checkPushSubscription().then(pushSubscription => {
+          if (!pushSubscription) {
+            this.isSubscribed = false;
+            resolve();
+          } else {
+            // is needed because a user can delete all caches (IndexedDB)
+            this.storeSubscriptionData(pushSubscription);
+            this.isSubscribed = true;
+            resolve();
+          }
+        });
+      }
+    });
+  }
 
-          let push = new Push(
-            pushSubscription.endpoint,
-            (pushSubscription as any).toJSON().keys.auth,
-            (pushSubscription as any).toJSON().keys.p256dh
-          );
-
-          this.databaseService.getUser().then(user => {
-            this.databaseService.updateUser(new User(user.uid, user.token, push));
-          });
-
-          console.log('[push] is subscribed');
-        }
+  public subscribeToPush(): Promise<{}> {
+    return new Promise((resolve, reject) => {
+      this.subscribeToPushService().then(() => {
+        this.isSubscribed = true;
+        resolve();
+      }).catch(() => {
+        this.isSubscribed = true;
+        reject();
       });
-    }
+    });
+  }
+
+  public unsubsribeFromPush(): Promise<{}> {
+    return new Promise((resolve, reject) => {
+      this.unsubscribeFromPushService().then(() => {
+        this.isSubscribed = false;
+        resolve();
+      }).catch(() => {
+        this.isSubscribed = true;
+        resolve();
+      });
+    });
   }
 
   public isPushSupported() {
@@ -42,16 +62,24 @@ export class PushService {
     return false;
   }
 
+  private storeSubscriptionData(pushSubscription: PushSubscription) {
+    let push = new Push(
+      pushSubscription.endpoint,
+      (pushSubscription as any).toJSON().keys.auth,
+      (pushSubscription as any).toJSON().keys.p256dh
+    );
+    this.databaseService.setUserSubscriptionData(push);
+  }
+
   private checkPushSubscription() {
     return navigator.serviceWorker.ready.then(serviceWorkerRegistration => {
       return serviceWorkerRegistration.pushManager.getSubscription();
     });
   }
 
-  private subscribeToPushService() { // here FCM
-    navigator.serviceWorker.ready.then(serviceWorkerRegistration => {
-
-      serviceWorkerRegistration.pushManager.subscribe({ userVisibleOnly: true })
+  private subscribeToPushService(): Promise<ServiceWorkerRegistration | void> { // here FCM
+    return navigator.serviceWorker.ready.then(serviceWorkerRegistration => {
+      return serviceWorkerRegistration.pushManager.subscribe({ userVisibleOnly: true })
         .then(pushSubscription => {
           this.storeSubscriptionInFirebase(pushSubscription);
 
@@ -62,21 +90,20 @@ export class PushService {
     });
   }
 
-  private unsubscribeFromPushService() {
-    navigator.serviceWorker.ready.then(serviceWorkerRegistration => {
+  private unsubscribeFromPushService(): Promise<ServiceWorkerRegistration | void> {
+    return navigator.serviceWorker.ready.then(serviceWorkerRegistration => {
 
-      serviceWorkerRegistration.pushManager.getSubscription().then(pushSubscription => {
+      return serviceWorkerRegistration.pushManager.getSubscription().then(pushSubscription => {
         if (pushSubscription) {
           (pushSubscription as any).unsubscribe().then(() => {
             console.log('[push] successfully unsubscribed');
           });
+          this.removeSubscriptionFromFirebase();
         }
       }).catch(err => {
         console.log('[push] failed to unsubscribe');
       });
     });
-
-    // ToDo: remove push key from firebase
   }
 
   private storeSubscriptionInFirebase(pushSubscription: PushSubscription) {
@@ -97,12 +124,19 @@ export class PushService {
           })
           .then(() => {
             console.log('[push] successfully subscribed');
-            this.databaseService.updateUser(new User(user.uid, user.token, push));
+            this.databaseService.setUserSubscriptionData(push);
           })
           .catch(err => {
-            this.unsubscribeFromPushService(); // only allow subsriptions if transfered to FB
+            this.unsubscribeFromPushService(); // revert subsription if not succesfully transfered to FB
             console.log(err);
           });
+      });
+  }
+
+  private removeSubscriptionFromFirebase() {
+    this.databaseService.getUser()
+      .then(user => {
+        firebase.database().ref('links/' + user.uid + '/push-subscriptions/' + user.push.auth).remove();
       });
   }
 }
