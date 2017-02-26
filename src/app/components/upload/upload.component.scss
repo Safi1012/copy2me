@@ -8,9 +8,9 @@
   z-index: 5;
   position: fixed;
   width: 100vw;
-  margin-top: 56px;
+  margin-top: 123px;
   @media #{$medium-and-up} {
-    margin-top: 64px;
+    margin-top: 131px;
   }
 }
 
@@ -30,16 +30,6 @@
 /*
 * input
 */
-
-.input-field {
-  margin-top: 35px;
-  @media #{$medium-and-up} {
-    margin-top: 50px;
-  }
-  @media #{$large-and-up} {
-    margin-top: 65px;
-  }
-}
 
 .input-field input[type=text] {
   margin-right: 10px;
@@ -79,7 +69,8 @@ button {
   box-shadow: none;
 }
 
-button:hover, button:focus {
+button:hover,
+button:focus {
   background-color: $primary-button-background-color;
   box-shadow: none;
 }
@@ -91,14 +82,7 @@ button:hover, button:focus {
 
 .row {
   background-color: $primary-color-light;
-  padding-bottom: 5px;
   margin-bottom: 0;
-  @media #{$medium-and-up} {
-    padding-bottom: 10px
-  }
-  @media #{$large-and-up} {
-    padding-bottom: 20px
-  }
 }
 
 

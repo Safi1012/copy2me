@@ -5,16 +5,15 @@
 */
 
 .row {
-  padding-top: 165px;
+  padding-top: 201px;
   z-index: 0;
   margin-bottom: 0;
   @media #{$medium-and-up} {
-    padding-top: 199px;
+    padding-top: 209px;
   }
   @media #{$large-and-up} {
-    padding-top: 235px;
+    padding-top: 211px;
   }
-  // height: 100vh; // Todo: substract padding-top;
 }
 
 

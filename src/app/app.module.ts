@@ -32,6 +32,7 @@ import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { SignInComponent } from './components/sign-in/sign-in.component';
 import { UploadComponent } from './components/upload/upload.component';
 import { HistoryComponent } from './components/history/history.component';
+import { PushComponent } from './components/push/push.component';
 
 // Services
 import { FirebaseService } from './services/firebase/firebase.service';
@@ -66,6 +67,7 @@ type StoreType = {
     HomeComponent,
     NavBarComponent,
     SignInComponent,
+    PushComponent,
     UploadComponent,
     HistoryComponent
   ],

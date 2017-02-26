@@ -1,0 +1,80 @@
+@import 'src/styles/_colors.scss';
+
+/*
+* host
+*/
+
+:host {
+  z-index: 5;
+  position: fixed;
+  width: 100vw;
+  margin-top: 51px;
+  @media #{$medium-and-up} {
+    margin-top: 59px;
+  }
+}
+
+
+/*
+* iOS
+*/
+
+.isIOS {
+  margin-top: 24px;
+  @media #{$medium-and-up} {
+    margin-top: 8px;
+  }
+}
+
+
+/*
+* row
+*/
+
+.row {
+  padding-bottom: 0;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  background-color: $primary-color-light;
+}
+
+
+/*
+* push
+*/
+
+.switch {
+  padding: 20px 0;
+  font-size: 0.8rem;
+  margin-left: 11px;
+
+  @media #{$large-and-up} {
+    margin-left: 6px;
+  }
+}
+
+.switch label {
+  color: $inverted-text-color;
+}
+
+.switch label input[type=checkbox]:checked+.lever {
+  background-color: $inverted-text-color;
+}
+
+.switch label input[type=checkbox]:checked+.lever:after {
+  background-color: $accent-color;
+}
+
+.switch label .lever {
+  width: 35px;
+  height: 13px;
+}
+
+.switch label .lever:after {
+  width: 18px;
+  height: 18px;
+}
+
+span .lever {
+  margin-bottom: 4px;
+}
