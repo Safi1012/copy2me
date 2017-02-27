@@ -17,7 +17,6 @@ const NormalModuleReplacementPlugin = require('webpack/lib/NormalModuleReplaceme
 const ProvidePlugin = require('webpack/lib/ProvidePlugin');
 const UglifyJsPlugin = require('webpack/lib/optimize/UglifyJsPlugin');
 const OptimizeJsPlugin = require('optimize-js-plugin');
-const CompressionPlugin = require('compression-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 
@@ -275,20 +274,6 @@ module.exports = function(env) {
       //   /src(\\|\/)debug(\\|\/)debug_renderer/,
       //   helpers.root('config/empty.js')
       // ),
-
-      /**
-       * Plugin: CompressionPlugin
-       * Description: Prepares compressed versions of assets to serve
-       * them with Content-Encoding
-       *
-       * See: https://github.com/webpack/compression-webpack-plugin
-       */
-      //  install compression-webpack-plugin
-      new CompressionPlugin({
-        regExp: /\.css$|\.html$|\.js$|\.map$/,
-        threshold: 2 * 1024,
-        algorithm: 'gzip'
-      }),
 
       /**
        * Plugin LoaderOptionsPlugin (experimental)
