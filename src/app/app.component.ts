@@ -29,23 +29,25 @@ export class AppComponent implements OnInit {
   }
 
   public ngOnInit() {
-    navigator.serviceWorker.ready.then(() => {
-      navigator.serviceWorker.addEventListener('message', event => {
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.ready.then(() => {
+        navigator.serviceWorker.addEventListener('message', event => {
 
-        switch (event.data) {
-          case 'sw_initial':
-            this.displaySnackbar('Caching complete! App now works offline.');
-            break;
+          switch (event.data) {
+            case 'sw_initial':
+              this.displaySnackbar('Caching complete! App now works offline.');
+              break;
 
-          case 'sw_new_version':
-            this.displaySnackbar('New Version is available.');
-            break;
+            case 'sw_new_version':
+              this.displaySnackbar('New Version is available.');
+              break;
 
-          default:
-            console.log('message command does not exist');
-        }
+            default:
+              console.log('message command does not exist');
+          }
+        });
       });
-    });
+    }
   }
 
   public displaySnackbar(textContent: string): void {
