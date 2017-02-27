@@ -9,7 +9,8 @@
             <input aria-hidden="true" readonly="readonly" type="text" value="{{link.text}}" id="{{link.timestamp}}" />
             <p>{{link.timestamp | date}}</p>
           </div>
-          <button aria-label="copy" class="btn-floating waves-effect waves-light button_upload secondary-content" type="submit" name="action" onclick="Materialize.toast('copied', 2000)" ngxClipboard [cbContent]="link.text" (cbOnError)="copyToClipboardOnError()" (cbOnSuccess)="copyToClipboardOnSuccess()">
+          <button aria-label="copy" class="btn-floating waves-effect waves-light button_upload secondary-content" type="submit" name="action"
+            ngxClipboard [cbContent]="link.text" (cbOnSuccess)="copyToClipboardOnSuccess()">
             <svg class="icon">
               <use xlink:href="assets/icons/icons.svg#icon-copy"></use>
             </svg>
@@ -21,3 +22,5 @@
     </ul>
   </div>
 </main>
+
+<div id="toast"></div>

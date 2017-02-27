@@ -71,12 +71,7 @@ export class HistoryComponent implements OnInit {
   };
 
   public onScroll() {
-    console.log('scroll');
-
-    // outsource
     this.databaseService.getInformationForFetchEvent(this.historyService.isInitial).then(values => {
-      console.log(values);
-      console.log(this.historyService.isInitial);
       let user = values[0];
       let startTimestamp = values[1];
 
@@ -86,11 +81,17 @@ export class HistoryComponent implements OnInit {
 
   // copy to clipboard
 
-  public copyToClipboardOnSuccess() {
-    // trigger toast
+  public displaySnackbar(textContent: string): void {
+    let snackbarEl = document.getElementById('toast');
+    snackbarEl.className = 'show';
+    snackbarEl.textContent = textContent;
+
+    setTimeout(() => {
+      snackbarEl.className = snackbarEl.className.replace('show', '');
+    }, 3000);
   }
 
-  public copyToClipboardOnError() {
-    // display error message
+  public copyToClipboardOnSuccess() {
+    this.displaySnackbar('copied to clipboard!');
   }
 }
