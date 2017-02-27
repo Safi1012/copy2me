@@ -2,6 +2,7 @@ import { Component, ApplicationRef, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { HistoryService } from '../../services/history/history.service';
 import { DatabaseService } from '../../services/database/database.service';
+import { PushService } from '../../services/push/push.service';
 import { User } from '../../models/user.model';
 
 @Component({
@@ -13,13 +14,15 @@ export class HistoryComponent implements OnInit {
 
   public links = [];
 
+  public isPushSupported = this.pushService.isPushSupported();
   public isIOS = (navigator.userAgent.match(/(iPad|iPhone|iPod)/g) &&
     (window.navigator as any).standalone ? true : false);
 
   constructor(
     private historyService: HistoryService,
     private databaseService: DatabaseService,
-    private appRef: ApplicationRef
+    private appRef: ApplicationRef,
+    public pushService: PushService
   ) { }
 
   public ngOnInit() {

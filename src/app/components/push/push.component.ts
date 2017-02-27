@@ -5,7 +5,6 @@ import { PushService } from '../../services/push/push.service';
   selector: 'c2m-push',
   templateUrl: 'push.component.html',
   styleUrls: ['./push.component.scss'],
-  providers: [PushService]
 })
 export class PushComponent implements OnInit {
 

@@ -8,9 +8,9 @@
   z-index: 5;
   position: fixed;
   width: 100vw;
-  margin-top: 123px;
+  margin-top: 41px;
   @media #{$medium-and-up} {
-    margin-top: 131px;
+    margin-top: 49px;
   }
 }
 
@@ -83,6 +83,7 @@ button:focus {
 .row {
   background-color: $primary-color-light;
   margin-bottom: 0;
+  margin-top: 15px;
 }
 
 

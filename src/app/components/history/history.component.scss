@@ -5,14 +5,18 @@
 */
 
 .row {
-  padding-top: 201px;
+  padding-top: 149px;
   z-index: 0;
   margin-bottom: 0;
   @media #{$medium-and-up} {
-    padding-top: 209px;
+    padding-top: 157px;
   }
-  @media #{$large-and-up} {
-    padding-top: 211px;
+}
+
+.isPush.row {
+  padding-top: 188px;
+  @media #{$medium-and-up} {
+    padding-top: 203px;
   }
 }
 

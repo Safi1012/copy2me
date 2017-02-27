@@ -1,5 +1,6 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { UploadService } from '../../services/upload/upload.service';
+import { PushService } from '../../services/push/push.service';
 
 @Component({
   selector: 'c2m-upload',
@@ -15,7 +16,8 @@ export class UploadComponent {
     (window.navigator as any).standalone ? true : false);
 
   constructor(
-    private uploadService: UploadService
+    private uploadService: UploadService,
+    private pushService: PushService
   ) { }
 
   public uploadLinkText() {

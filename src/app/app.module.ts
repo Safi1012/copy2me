@@ -39,6 +39,7 @@ import { FirebaseService } from './services/firebase/firebase.service';
 import { SignInService } from './services/sign-in/sign-in.service';
 import { DatabaseService } from './services/database/database.service';
 import { HistoryService } from './services/history/history.service';
+import { PushService } from './services/push/push.service';
 
 // Guards
 import { SignInGuard } from './guards/sign-in.guard';
@@ -87,7 +88,8 @@ type StoreType = {
     FirebaseService,
     SignInService,
     DatabaseService,
-    HistoryService
+    HistoryService,
+    PushService
   ]
 })
 export class AppModule {
