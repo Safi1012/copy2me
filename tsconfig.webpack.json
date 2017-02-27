@@ -20,7 +20,8 @@
     ],
     "types": [
       "hammerjs",
-      "node"
+      "node",
+      "service_worker_api"
     ]
   },
   "exclude": [
