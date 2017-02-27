@@ -92,6 +92,6 @@ export class HistoryComponent implements OnInit {
   }
 
   public copyToClipboardOnSuccess() {
-    this.displaySnackbar('copied to clipboard!');
+    this.displaySnackbar('Copied to clipboard!');
   }
 }

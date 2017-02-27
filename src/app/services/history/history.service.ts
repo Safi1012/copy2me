@@ -52,21 +52,3 @@ export class HistoryService {
     });
   }
 }
-
-  // fetchTextFromFirebase(startTimestamp: number, user: User): Observable<[any]> {
-  //   return new Observable<[any]>(observer => {
-  //     let historyRef = firebase.database().ref('links/' + user.uid + '/history').
-  //       orderByChild('timestamp').startAt(startTimestamp).limitToFirst(this.CHUNK_SIZE);
-
-  //     historyRef.on('child_added', result => {
-  //       let historyEntry = new HistoryEntry(result.val().timestamp * -1, result.val().text);
-
-  //       this.databaseService.addTextToDbHistory(historyEntry.timestamp as number, historyEntry.text);
-  //       observer.next(historyEntry);
-  //     });
-  //   }
-  //   ).scan((acc, value) => {
-  //     acc.push(value);
-  //     return acc;
-  //   }, []);
-  // }
