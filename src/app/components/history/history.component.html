@@ -9,7 +9,7 @@
             <input aria-hidden="true" readonly="readonly" type="text" value="{{link.text}}" id="{{link.timestamp}}" />
             <p>{{link.timestamp | date}}</p>
           </div>
-          <button aria-label="copy" class="btn-floating waves-effect waves-light button_upload secondary-content" type="submit" name="action"
+          <button aria-label="copy" class="btn-floating waves-effect waves-orange waves-circle button_upload secondary-content" type="submit" name="action"
             ngxClipboard [cbContent]="link.text" (cbOnSuccess)="copyToClipboardOnSuccess()">
             <svg class="icon">
               <use xlink:href="assets/icons/icons.svg#icon-copy"></use>
@@ -22,5 +22,3 @@
     </ul>
   </div>
 </main>
-
-<div id="toast"></div>
