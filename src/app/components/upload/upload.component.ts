@@ -1,6 +1,5 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { UploadService } from '../../services/upload/upload.service';
-import { PushService } from '../../services/push/push.service';
 
 @Component({
   selector: 'c2m-upload',
@@ -11,20 +10,20 @@ import { PushService } from '../../services/push/push.service';
 export class UploadComponent {
   @ViewChild('linkInput') public linkInput: ElementRef;
 
-  public inputFieldText = '';
   public isIOS = (navigator.userAgent.match(/(iPad|iPhone|iPod)/g) &&
     (window.navigator as any).standalone ? true : false);
 
   constructor(
-    private uploadService: UploadService,
-    private pushService: PushService
+    private uploadService: UploadService
   ) { }
 
   public uploadLinkText() {
-    if (this.inputFieldText.length > 0) {
-      this.uploadService.pushLinkToFirebase(this.inputFieldText);
-      this.inputFieldText = '';
-      (this.linkInput.nativeElement as HTMLInputElement).blur();
+    let input = (this.linkInput.nativeElement as HTMLInputElement);
+
+    if (input.value.length > 0) {
+      this.uploadService.pushLinkToFirebase(input.value);
+      input.value = '';
+      input.blur();
     }
   }
 }
