@@ -16,18 +16,6 @@
 
 
 /*
-* iOS
-*/
-
-.isIOS {
-  margin-top: 24px;
-  @media #{$medium-and-up} {
-    margin-top: 8px;
-  }
-}
-
-
-/*
 * input
 */
 
@@ -96,4 +84,16 @@ svg {
   height: 32px;
   fill: white;
   padding-top: 5px;
+}
+
+
+/*
+* iOS
+*/
+
+.isIOS {
+  margin-top: 39px;
+  @media #{$medium-and-up} {
+    margin-top: 31px;
+  }
 }

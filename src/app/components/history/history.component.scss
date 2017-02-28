@@ -27,12 +27,12 @@
 */
 
 .isIOS {
-  padding-top: 189px;
+  padding-top: 167px;
   @media #{$medium-and-up} {
-    padding-top: 206px;
+    padding-top: 175px;
   }
   @media #{$large-and-up} {
-    padding-top: 242px;
+    padding-top: 184px;
   }
 }
 
