@@ -1,6 +1,6 @@
 toolbox = require('sw-toolbox');
 
-let shellCacheKey = 'copy2me-aot-shell-cache-v2';
+let shellCacheKey = 'copy2me-aot-shell-cache-v3';
 
 /*
  * precache all static files

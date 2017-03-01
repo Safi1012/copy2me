@@ -57,6 +57,6 @@ export class AppComponent implements OnInit {
 
     setTimeout(() => {
       snackbarEl.className = snackbarEl.className.replace('show', '');
-    }, 5000);
+    }, 3000);
   }
 }
