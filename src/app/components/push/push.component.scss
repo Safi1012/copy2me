@@ -42,10 +42,14 @@
 /*
 * push
 */
+.switch-container {
+  display: flex;
+  height: 40px;
+}
 
 .switch {
-  padding: 20px 0;
   font-size: 0.8rem;
+  align-self: center;
   margin-left: 11px;
 
   @media #{$large-and-up} {
@@ -73,8 +77,4 @@
 .switch label .lever:after {
   width: 18px;
   height: 18px;
-}
-
-span .lever {
-  margin-bottom: 4px;
 }

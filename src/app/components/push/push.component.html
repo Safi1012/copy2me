@@ -1,7 +1,7 @@
 <div [class.isIOS]="isIOS" class="row">
   <div class="row">
     <div class="col l3"></div>
-    <div class="col s12 l6">
+    <div class="col s12 l6 switch-container">
       <div class="switch">
         <label>Push
           <input type="checkbox" [checked]="pushService.isSubscribed" (change)="managePushSubscription()">

@@ -39,7 +39,7 @@ export class DatabaseService {
   public setUserSubscriptionData(push: Push) {
     this.getUser().then(user => {
       let updatedUser = new User(user.uid, user.token, push);
-      this.userDB.setItem('user', user).catch(err => {
+      this.userDB.setItem('user', updatedUser).catch(err => {
         console.log('Localforage - error saving user: ' + err);
       });
     });

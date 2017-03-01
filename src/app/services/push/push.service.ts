@@ -81,7 +81,7 @@ export class PushService {
     return navigator.serviceWorker.ready.then(serviceWorkerRegistration => {
       return serviceWorkerRegistration.pushManager.subscribe({ userVisibleOnly: true })
         .then(pushSubscription => {
-          this.storeSubscriptionInFirebase(pushSubscription);
+          this.storeSubscription(pushSubscription);
 
         }).catch(err => {
           console.log('[push] could not subscribe to FCM: ' + err);
@@ -106,7 +106,7 @@ export class PushService {
     });
   }
 
-  private storeSubscriptionInFirebase(pushSubscription: PushSubscription) {
+  private storeSubscription(pushSubscription: PushSubscription) {
     let push = new Push(
       pushSubscription.endpoint,
       (pushSubscription as any).toJSON().keys.auth,
@@ -136,7 +136,7 @@ export class PushService {
   private removeSubscriptionFromFirebase() {
     this.databaseService.getUser()
       .then(user => {
-        firebase.database().ref('links/' + user.uid + '/push-subscriptions/' + user.push.auth).remove();
+        firebase.database().ref('links/' + user.uid + '/push-subscriptions/' + user.push.auth).set(null);
       });
   }
 }
