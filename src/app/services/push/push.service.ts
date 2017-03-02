@@ -37,7 +37,7 @@ export class PushService {
         this.isSubscribed = true;
         resolve();
       }).catch(() => {
-        this.isSubscribed = true;
+        this.isSubscribed = false;
         reject();
       });
     });
