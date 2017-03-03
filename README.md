@@ -50,7 +50,7 @@ Copy2me fulfills all steps of Google's Progressive Web App <a href="https://deve
 
 If you want to experiment with this application and learn more about the concepts 
 behind Progressive Web Apps just fork this project and get started. A great introduction
-on what Progressive Web Apps are exaclty can be found on <a href="https://developers.google.com/web/progressive-web-apps/" target="_blank">Google's Developers</a> site.
+on what Progressive Web Apps are exactly can be found on <a href="https://developers.google.com/web/progressive-web-apps/" target="_blank">Google's Developers</a> site.
 
 The following steps explain all steps in order to execute Copy2me on your local machine:
 
@@ -59,8 +59,7 @@ The following steps explain all steps in order to execute Copy2me on your local 
 #### **Requirements**
 
 Before you can compile and run the project you have to make sure that you installed Node.JS on computer.
-If you are uncertain whether you already have a copy of Node installed on you machine just execute the following
-command in your command line: 
+If you are uncertain whether you already have a copy of Node installed on your machine, just execute the following command in your command line:
 
 ```bash
 $ node -v
@@ -70,9 +69,11 @@ $ node -v
 
 After executing this command you should see either the installed version number of Node or the error message 'command not found' indicating that Node is not installed on your system.
 
-You can download the latest Node.JS version form the official node site: <a href="https://nodejs.org" target="_blank">https://nodejs.org</a>.
-Node.JS is availabe on Windows, macOS and Linux. After installing Node you should also have a the npm (node package manager)
- installed.
+You can download the latest Node.JS version from the official node site: <a href="https://nodejs.org" target="_blank">https://nodejs.org</a>.
+Node.JS is available on Windows, macOS and Linux. It's important to know that Node comes with npm (node package manager), which is the tool needed to install the Copy2me dependencies later.
+
+
+
 
 <br/>
 
@@ -94,31 +95,26 @@ $ git pull https://github.com/Safi1012/Piclet.git
 
 #### **Install all dependencies**
 
-To install all Copy2me dependcies you just have to navigate to the project root and execute:
+To install all Copy2me dependencies you just have to navigate to the project root and execute:
 
 ```bash
 $ npm install
 ```
 
-Npm will then start downloading and instaling all referenced dependcies.
+Npm will then start downloading and install all referenced dependencies.
 
 <br/>
 
 
 #### **Execute Copy2me**
 
-Finally run the application and start experiementing. The following commands help you to get started:
+Finally, run the application and start experimenting. The following commands help you to get started:
 
 
 |Command|Description|
 |---|---|
-|npm run start|Start webpack development server @ **localhost:3001**|
-|npm run server:dev|Start webpack development server @ **localhost:3001**|
-|npm run server:prod|Build production bundles to **./dist** directory and starts a server @ **localhost:3001**|
+|npm run start|Start webpack development server @**localhost:3001**|
+|npm run server:dev|Start webpack development server @**localhost:3001**|
+|npm run server:prod|Build production bundles to **./dist** directory and starts a server @**localhost:3001**|
 |npm run build|Build production bundles to **./dist** directory|
 |npm run build:aot|Build production with the AOT compiler and bundles the files to **./dist** directory|
-
-
-[//]: <> (#### Self Host Copy2me)
-
-
