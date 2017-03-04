@@ -136,7 +136,9 @@ export class PushService {
   private removeSubscriptionFromFirebase() {
     this.databaseService.getUser()
       .then(user => {
-        firebase.database().ref('links/' + user.uid + '/push-subscriptions/' + user.push.auth).set(null);
+        if (user.push) {
+          firebase.database().ref('links/' + user.uid + '/push-subscriptions/' + user.push.auth).set(null);
+        }
       });
   }
 }
