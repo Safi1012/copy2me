@@ -137,13 +137,14 @@ export class DatabaseService {
   }
 
   public addLinkToHistoryDB(timestamp: number, text: string): Promise<[void | HistoryEntry, void | HistoryEntry]> {
+    // make timestamp positive -> only work with positive timestamps on the client side
     let historyEntry = new HistoryEntry(timestamp * -1, text);
 
-    let historyDbPromise = this.historyDB.setItem(String(timestamp), historyEntry).catch(err => {
+    let historyDbPromise = this.historyDB.setItem(String(timestamp * -1), historyEntry).catch(err => {
       console.log('Localforage - error saving history entry' + err);
     });
 
-    let historyIntitialDbPromise = this.historyIntialDB.setItem(String(timestamp), historyEntry).catch(err => {
+    let historyIntitialDbPromise = this.historyIntialDB.setItem(String(timestamp * -1), historyEntry).catch(err => {
       console.log('Localforage - error saving history entry' + err);
     });
 
@@ -151,7 +152,7 @@ export class DatabaseService {
   }
 
   public removeLinkFromHistoryDB(timestamp: number) {
-    return this.historyDB.removeItem(String(timestamp)).catch(err => {
+    return this.historyDB.removeItem(String(timestamp * -1)).catch(err => {
       console.log('Localforage - error removing entry from historyDB' + err);
     }).then(() => {
       console.log('removed item');
@@ -159,12 +160,12 @@ export class DatabaseService {
   }
 
   public editLinkInHistoryDB(timestamp: number, text: string) {
-    let historyEntry = new HistoryEntry(timestamp, text);
+    let historyEntry = new HistoryEntry(timestamp * -1, text);
 
-    return this.historyDB.getItem(String(timestamp))
+    return this.historyDB.getItem(String(timestamp * -1))
       .then(item => {
         item = historyEntry;
-        this.historyDB.setItem(String(timestamp), item).catch(err => {
+        this.historyDB.setItem(String(timestamp * -1), item).catch(err => {
           console.log('Localforage - error editing history entry' + err);
         });
       })
