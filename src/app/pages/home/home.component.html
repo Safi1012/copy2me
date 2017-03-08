@@ -1,7 +1,7 @@
 <c2m-nav-bar></c2m-nav-bar>
 
-<c2m-push *ngIf="isPushSupported"></c2m-push>
+<c2m-push *ngIf="isPushSupported && !signInService.isDemoAccount"></c2m-push>
 
-<c2m-upload [class.isPush]="isPushSupported"></c2m-upload>
+<c2m-upload [class.isPush]="isPushSupported && !signInService.isDemoAccount"></c2m-upload>
 
 <c2m-history></c2m-history>

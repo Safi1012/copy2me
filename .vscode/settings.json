@@ -4,5 +4,6 @@
     "**/compiled": true,
     "**/dll": true,
     "**/report": true
-  }
+  },
+  "vsicons.presets.angular": true
 }

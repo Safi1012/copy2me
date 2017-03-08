@@ -3,6 +3,7 @@ import { Observable } from 'rxjs/Observable';
 import { HistoryService } from '../../services/history/history.service';
 import { DatabaseService } from '../../services/database/database.service';
 import { PushService } from '../../services/push/push.service';
+import { SignInService } from '../../services/sign-in/sign-in.service';
 import { User } from '../../models/user.model';
 
 @Component({
@@ -22,7 +23,8 @@ export class HistoryComponent implements OnInit {
     private historyService: HistoryService,
     private databaseService: DatabaseService,
     private appRef: ApplicationRef,
-    public pushService: PushService
+    public pushService: PushService,
+    public signInService: SignInService
   ) { }
 
   public ngOnInit() {

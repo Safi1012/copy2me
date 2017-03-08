@@ -7,15 +7,19 @@ import * as firebase from 'firebase';
 @Injectable()
 export class SignInService {
 
+  public isDemoAccount = false;
+
   constructor(
     private databaseService: DatabaseService,
-    private router: Router,
+    private router: Router
   ) { }
 
   // sign-in
 
   public signAnonymously() {
-    firebase.auth().signInAnonymously().catch(err => {
+    firebase.auth().signInAnonymously().then(() => {
+      this.isDemoAccount = true;
+    }).catch(err => {
       console.log('signInAnonymously: ' + err);
     });
   }
@@ -46,6 +50,7 @@ export class SignInService {
 
   public signOut() {
     firebase.auth().signOut().then(() => {
+      this.isDemoAccount = false;
       console.log('sign-out successfully');
 
     }, err => {
