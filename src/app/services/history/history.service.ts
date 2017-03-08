@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { Subscriber } from 'rxjs/Subscriber';
 import 'rxjs/add/operator/debounceTime';
 import * as firebase from 'firebase';
 
@@ -13,6 +14,7 @@ const CHUNK_SIZE = 30;
 export class HistoryService {
 
   public isInitial = true;
+  public observer: Subscriber<[any]>;
 
   constructor(
     private databaseService: DatabaseService
@@ -21,6 +23,7 @@ export class HistoryService {
   public fetchLinksFromFirebase(startTimestamp: number, user: User): Observable<[any]> {
 
     return new Observable<[any]>(observer => {
+      this.observer = observer;
 
       let historyRef = firebase.database().ref('links/' + user.uid + '/history')
         .orderByChild('timestamp').startAt(startTimestamp).limitToFirst(CHUNK_SIZE);

@@ -1,6 +1,17 @@
 toolbox = require('sw-toolbox');
+localForage = require('localForage');
 
 let shellCacheKey = 'copy2me-aot-shell-cache-v7';
+
+const historyDB = localForage.createInstance({
+  name: 'copy2me_history'
+});
+const historyIntialDB = localForage.createInstance({
+  name: 'copy2me_history_initial'
+});
+const messageDB = localForage.createInstance({
+  name: 'copy2me_messsages'
+});
 
 /*
  * precache all static files
@@ -64,10 +75,10 @@ function sendMessageToAllClients(msg) {
 }
 
 function sendMessage(client, msg) {
-  return new Promise(function(resolve, reject) {
+  return new Promise((resolve, reject) => {
     let channel = new MessageChannel();
 
-    channel.port1.onmessage = function(event) {
+    channel.port1.onmessage = event => {
       if (event.data.error) {
         reject(event.data.error);
       } else {
@@ -94,3 +105,57 @@ self.addEventListener('push', event => {
     })
   );
 });
+
+/*
+ * background sync, send request over REST API to firebase
+ */
+
+self.addEventListener('sync', e => {
+  console.log('[ServiceWorker] Sync: ', e);
+
+  e.waitUntil(
+    messageDB.iterate((value, key, iterationNumber) => {
+      pushToFirebase(value.user.uid, value.user.token, value.timestamp, value.text, value.user.push.auth);
+
+    }).catch(err => {
+      console.log('[ServiceWorker] Sync: ' + err);
+
+    })
+  );
+});
+
+/*
+ * push information (uid, token, timestamp, text) to firebase over REST API
+ */
+
+function pushToFirebase(uid, token, timestamp, text, pushAuth) {
+
+  return fetch('https://clipme-32a80.firebaseio.com/links/' + uid + '/history.json?auth=' + token, {
+    method: 'POST',
+    headers: new Headers({
+      'Content-Type': 'application/json; charset=UTF-8'
+    }),
+    body: JSON.stringify({
+      'timestamp': (timestamp * -1),
+      'text': text,
+      'notification-sent': false,
+      'push-auth': pushAuth,
+    }),
+    mode: 'cors'
+
+  }).then(result => {
+    debugger;
+    console.log('SW - pushToFirebase - ' + timestamp);
+    messageDB.removeItem(timestamp.toString()).then(() => {
+      console.log('Successfully removed');
+    }).catch(err => {
+      console.log('Could not remove item: ' + err);
+    });
+
+  }).catch(err => {
+    historyDB.removeItem(timestamp.toString());
+    historyIntialDB.removeItem(timestamp.toString());
+    console.log(err);
+
+  });
+}

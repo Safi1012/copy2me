@@ -1,6 +1,8 @@
+import * as localForage from 'localforage';
+
 import { User } from '../../models/user.model';
 import { Push } from '../../models/push.model';
-import * as localForage from 'localforage';
+import { Message } from '../../models/message.models';
 import { HistoryEntry } from '../../models/history-entry.model';
 
 export class DatabaseService {
@@ -8,6 +10,7 @@ export class DatabaseService {
   private historyDB = localForage.createInstance({ name: 'copy2me_history' });
   private historyIntialDB = localForage.createInstance({ name: 'copy2me_history_initial' });
   private userDB = localForage.createInstance({ name: 'copy2me_user' });
+  private messageDB = localForage.createInstance({ name: 'copy2me_messsages' });
   private user: User;
   private userHistory = [];
 
@@ -85,6 +88,7 @@ export class DatabaseService {
     this.clearUserDB();
     this.clearHistoryDB();
     this.clearInitialHistoryDB();
+    this.clearMessageDB();
   }
 
   public clearUserDB() {
@@ -97,6 +101,10 @@ export class DatabaseService {
 
   public clearInitialHistoryDB(): Promise<void> {
     return this.historyIntialDB.clear();
+  }
+
+  public clearMessageDB(): Promise<void> {
+    return this.messageDB.clear();
   }
 
   public overrideOldHistoryDB() {
@@ -174,6 +182,22 @@ export class DatabaseService {
       });
   }
 
+  // message queue for sw
+
+  public addUploadTextMessageToQueue(timestamp: number, text: string, user: User): Promise<Message> {
+    let message = new Message(String(timestamp), user, text);
+
+    return this.messageDB.setItem(String(timestamp), message).catch(err => {
+      console.log('Localforage - error saving message' + err);
+    });
+  }
+
+  public removeMessageQueue() {
+    this.messageDB.clear().catch(err => {
+      console.log('Localforage - error clearing messages db' + err);
+    });
+  }
+
   private compareTimestamp(a, b) {
     if (a.timestamp > b.timestamp) {
       return -1;
@@ -183,4 +207,5 @@ export class DatabaseService {
     }
     return 0;
   }
+
 }
