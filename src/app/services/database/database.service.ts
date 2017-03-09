@@ -125,11 +125,11 @@ export class DatabaseService {
 
   // offline history data
 
-  public getLinksFromHistoryDB(): Promise<[any]> {
+  public getLinksFromHistoryDB(): Promise<[HistoryEntry]> {
     let history = [];
     return new Promise((resolve) => {
 
-      this.historyDB.iterate((value, key, iterationNumber) => {
+      this.historyDB.iterate((value: HistoryEntry, key, iterationNumber) => {
         history.push(value);
 
       }).then(() => {
@@ -144,9 +144,9 @@ export class DatabaseService {
     });
   }
 
-  public addLinkToHistoryDB(timestamp: number, text: string): Promise<[void | HistoryEntry, void | HistoryEntry]> {
+  public addLinkToHistoryDB(timestamp: number, text: string, isOptimistic: boolean): Promise<[void | HistoryEntry]> {
     // make timestamp positive -> only work with positive timestamps on the client side
-    let historyEntry = new HistoryEntry(timestamp * -1, text);
+    let historyEntry = new HistoryEntry(timestamp * -1, text, isOptimistic);
 
     let historyDbPromise = this.historyDB.setItem(String(timestamp * -1), historyEntry).catch(err => {
       console.log('Localforage - error saving history entry' + err);
@@ -167,8 +167,8 @@ export class DatabaseService {
     });
   }
 
-  public editLinkInHistoryDB(timestamp: number, text: string) {
-    let historyEntry = new HistoryEntry(timestamp * -1, text);
+  public editLinkInHistoryDB(timestamp: number, text: string, isOptimistic: boolean) {
+    let historyEntry = new HistoryEntry(timestamp * -1, text, isOptimistic);
 
     return this.historyDB.getItem(String(timestamp * -1))
       .then(item => {

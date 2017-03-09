@@ -1,7 +1,7 @@
 toolbox = require('sw-toolbox');
 localForage = require('localForage');
 
-let shellCacheKey = 'copy2me-aot-shell-cache-v7';
+let shellCacheKey = 'copy2me-aot-shell-cache-v1';
 
 const historyDB = localForage.createInstance({
   name: 'copy2me_history'
@@ -69,7 +69,7 @@ function sendMessageToAllClients(msg) {
   self.clients.matchAll().then(clients => {
     clients.forEach(client => {
       sendMessage(client, msg)
-        .then(m => console.log('SW Received Message: ' + m));
+        .then(m => console.log('[SW] Received Message: ' + m));
     });
   });
 }
@@ -111,7 +111,7 @@ self.addEventListener('push', event => {
  */
 
 self.addEventListener('sync', e => {
-  console.log('[ServiceWorker] Sync: ', e);
+  console.log('[ServiceWorker] Sync: ' + e);
 
   e.waitUntil(
     messageDB.iterate((value, key, iterationNumber) => {
@@ -129,6 +129,7 @@ self.addEventListener('sync', e => {
  */
 
 function pushToFirebase(uid, token, timestamp, text, pushAuth) {
+  console.log(pushAuth.length);
 
   return fetch('https://clipme-32a80.firebaseio.com/links/' + uid + '/history.json?auth=' + token, {
     method: 'POST',
@@ -136,19 +137,15 @@ function pushToFirebase(uid, token, timestamp, text, pushAuth) {
       'Content-Type': 'application/json; charset=UTF-8'
     }),
     body: JSON.stringify({
-      'timestamp': (timestamp * -1),
-      'text': text,
-      'notification-sent': false,
+      'notification-sent': (pushAuth.length > 0 ? true : false),
       'push-auth': pushAuth,
+      'text': text,
+      'timestamp': (timestamp * -1)
     }),
     mode: 'cors'
 
   }).then(result => {
-    debugger;
-    console.log('SW - pushToFirebase - ' + timestamp);
-    messageDB.removeItem(timestamp.toString()).then(() => {
-      console.log('Successfully removed');
-    }).catch(err => {
+    messageDB.removeItem(timestamp.toString()).catch(err => {
       console.log('Could not remove item: ' + err);
     });
 

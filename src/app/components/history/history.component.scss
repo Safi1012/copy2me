@@ -45,13 +45,17 @@ ul.collection {
   margin-top: 0;
   margin-bottom: 0;
   border: 0;
+  padding: 0;
 }
 
 li.collection-item {
-  padding: 20px 0;
+  padding: 20px 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  @media #{$large-and-up} {
+    padding-right: 15px;
+  }
 }
 
 li input {
@@ -63,6 +67,13 @@ li input {
   text-overflow: ellipsis;
 }
 
+.col {
+  padding: 0;
+}
+
+.isOptimistic {
+  background-color: $row-optimistic-color;
+}
 
 /*
 * button

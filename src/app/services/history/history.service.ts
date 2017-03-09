@@ -29,7 +29,7 @@ export class HistoryService {
         .orderByChild('timestamp').startAt(startTimestamp).limitToFirst(CHUNK_SIZE);
 
       historyRef.on('child_added', data => {
-        this.databaseService.addLinkToHistoryDB(data.val().timestamp, data.val().text).then(() => {
+        this.databaseService.addLinkToHistoryDB(data.val().timestamp, data.val().text, false).then(() => {
           observer.next();
         });
       });
@@ -40,7 +40,7 @@ export class HistoryService {
       });
 
       historyRef.on('child_changed', data => {
-        this.databaseService.editLinkInHistoryDB(data.val().timestamp, data.val().text);
+        this.databaseService.editLinkInHistoryDB(data.val().timestamp, data.val().text, false);
         observer.next();
       });
 

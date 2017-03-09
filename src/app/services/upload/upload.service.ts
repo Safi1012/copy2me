@@ -36,7 +36,7 @@ export class UploadService {
     let timestamp = new Date().getTime();
 
     // optimistic update
-    this.databaseService.addLinkToHistoryDB(timestamp * -1, text).then(() => {
+    this.databaseService.addLinkToHistoryDB(timestamp * -1, text, true).then(() => {
       // forces history.component -> to refetch all links from IndexedDB
       this.historyService.observer.next();
 
