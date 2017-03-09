@@ -113,16 +113,8 @@ Finally, run the application and start experimenting. The following commands hel
 
 |Command|Description|
 |---|---|
-|npm run start|Starts webpack development server @**localhost:3001**|
-|npm run server:dev|Starts webpack development server @**localhost:3001**|
-|npm run server:prod|Builds production bundle to **/dist** directory and starts a server @**localhost:8080**|
-|npm run build|Builds production bundle to **/dist** directory|
-|npm run build:aot|Builds production bundle with the AOT compiler to **/dist** directory|
-
-
-<br/>
-
-
-#### **Deploy Copy2me**
-
-If you want to deploy Copy2me by yourself make sure to checkout the <a href="https://github.com/Safi1012/copy2me-backend" target="_blank">Copy2me-backend</a> repository.
+|npm run start|Start webpack development server @**localhost:3001**|
+|npm run server:dev|Start webpack development server @**localhost:3001**|
+|npm run server:prod|Build production bundles to **./dist** directory and starts a server @**localhost:3001**|
+|npm run build|Build production bundles to **./dist** directory|
+|npm run build:aot|Build production with the AOT compiler and bundles the files to **./dist** directory|
