@@ -4,7 +4,7 @@
 your devices in a simple and intuitive way. The following screenshots give you an idea how the 
 application looks. 
 
-Open <a href="https://copy2me.filipe-santoscorrea.de" target="_blank">Copy2me</a> and start sharing your links. 
+Open <a href="https://clipme-32a80.firebaseapp.com/welcome" target="_blank">Copy2me</a> and start sharing your links. 
 
 <img src="https://cloud.githubusercontent.com/assets/3514796/23517677/5b3b778e-ff71-11e6-8c09-527c9df46f8e.png" 
 alt="welcome" width="240px" height="auto">
